@@ -3,6 +3,8 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 // Geist — tipografía oficial del producto (paquete `geist` de Vercel)
 // GeistSans.variable → --font-geist-sans
@@ -55,7 +57,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="es"
       className={`${GeistSans.variable} ${GeistMono.variable} ${plexSerif.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
