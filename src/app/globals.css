@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+ * AULENTRA — Tokens Horizon DARK
+ * Fuente: aulentra_manual_base_marca.pdf (paleta dark oficial del monorepo)
+ * ==========================================================================*/
+
+:root {
+  /* Superficies */
+  --bg:         #151935;
+  --bg-deep:    #101328;
+  --card:       #1D2145;
+  --elevated:   #242852;
+  --hover:      #2C305C;
+
+  /* Texto */
+  --fg:         #ECEEF8;
+  --fg-soft:    #B8BDD6;
+  --muted:      #7B82A6;
+  --subtle:     #555B7A;
+
+  /* Bordes */
+  --line:        #272B50;
+  --line-soft:   #1E2240;
+  --line-strong: #363B68;
+
+  /* Horizon soft (dark) */
+  --primary:       #A5B4FC;
+  --primary-hover: #818CF8;
+  --primary-light: rgba(99, 102, 241, 0.1);
+  --accent:        #7DD3FC;
+  --accent-cyan:   #67E8F9;
+
+  /* Gradientes de marca */
+  --horizon-gradient:
+    linear-gradient(135deg, #4F46E5 0%, #3B82F6 55%, #06B6D4 100%);
+  --horizon-gradient-soft:
+    linear-gradient(135deg, #A5B4FC 0%, #7DD3FC 55%, #67E8F9 100%);
+
+  /* Transición estándar */
+  --ease-std:     cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-std: 200ms;
+}
+
+/* ----------------------------------------------------------------------------
+ * Base
+ * ---------------------------------------------------------------------------*/
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: -0.006em;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------------------
+ * Headings
+ * ---------------------------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+
+/* ----------------------------------------------------------------------------
+ * Accesibilidad
+ * ---------------------------------------------------------------------------*/
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible — anillo primary soft */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--bg-deep);
+}

@@ -1,0 +1,3 @@
+# Pre-lanzamiento — no indexar hasta que el sitio esté oficialmente publicado.
+User-agent: *
+Disallow: /
