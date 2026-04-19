@@ -6,6 +6,8 @@ import { cn } from "@/lib/cn";
 interface RevealProps extends HTMLAttributes<HTMLDivElement> {
   delay?: number;
   offset?: number;
+  /** Escala inicial — sensación de "settle". Default: 0.97. */
+  scaleFrom?: number;
 }
 
 /**
@@ -15,7 +17,8 @@ export function Reveal({
   className,
   children,
   delay = 0,
-  offset = 12,
+  offset = 28,
+  scaleFrom = 0.97,
   style,
   ...props
 }: RevealProps) {
@@ -51,14 +54,16 @@ export function Reveal({
     <div
       ref={ref}
       className={cn(
-        // Easing premium "luxury exit" + duración 720ms.
-        "transition-[opacity,transform] duration-[720ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
-        visible ? "opacity-100 translate-y-0" : "opacity-0",
+        // Easing "luxury exit" + duración generosa. Combina opacity, translate y scale.
+        "transition-[opacity,transform] duration-[820ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform motion-reduce:transition-none",
+        visible ? "opacity-100" : "opacity-0",
         className
       )}
       style={{
         transitionDelay: `${delay}ms`,
-        transform: visible ? "translateY(0)" : `translateY(${offset}px)`,
+        transform: visible
+          ? "translateY(0) scale(1)"
+          : `translateY(${offset}px) scale(${scaleFrom})`,
         ...style,
       }}
       {...props}
