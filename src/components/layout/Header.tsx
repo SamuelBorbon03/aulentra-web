@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
@@ -11,9 +12,32 @@ import { MobileNav } from "./MobileNav";
 
 export function Header() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Header scroll-aware: bg intensifica al scrollear, sin shrink. Throttled vía rAF.
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 8));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line-soft bg-bg-deep/90 backdrop-blur-md">
+    <header
+      className={cn(
+        "sticky top-0 z-30 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        scrolled
+          ? "bg-bg-deep/95 border-b border-line-soft shadow-md"
+          : "bg-bg-deep/60 border-b border-transparent"
+      )}
+    >
       <Container>
         <div className="flex h-20 items-center justify-between">
           <Link href="/" aria-label="Ir al inicio" className="inline-flex items-center">

@@ -5,6 +5,7 @@ import { IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageTransition } from "@/components/ui/PageTransition";
 
 // Geist — tipografía oficial del producto (paquete `geist` de Vercel)
 // GeistSans.variable → --font-geist-sans
@@ -59,7 +60,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         <Header />
-        <main id="main">{children}</main>
+        <main id="main">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
       </body>
     </html>

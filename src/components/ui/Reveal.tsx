@@ -51,7 +51,8 @@ export function Reveal({
     <div
       ref={ref}
       className={cn(
-        "transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none",
+        // Easing premium "luxury exit" + duración 720ms.
+        "transition-[opacity,transform] duration-[720ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
         visible ? "opacity-100 translate-y-0" : "opacity-0",
         className
       )}
