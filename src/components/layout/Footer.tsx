@@ -5,11 +5,17 @@ import { NAV_LINKS } from "./nav-config";
 
 /**
  * Footer Aulentra — 3 columnas (Sitio · Acerca de · Contacto) sobre bloque
- * superior con propósito + wordmark. Hrefs externos quedan en "#" hasta
- * que el usuario defina routing real (memoria project_web_hyperlinks_pending).
+ * superior con propósito + wordmark. Otros hrefs externos quedan en "#"
+ * hasta routing real (memoria project_web_hyperlinks_pending).
  *
  * Sin la palabra "demo" en ningún lado (regla project_aulentra_brand_rules).
  */
+
+// URL del sitio Noventor — env var con fallback a dev local.
+// Cuando se defina URL de producción, sobrescribir con NEXT_PUBLIC_NOVENTOR_URL.
+const NOVENTOR_URL =
+  process.env.NEXT_PUBLIC_NOVENTOR_URL ?? "http://localhost:3000";
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -23,7 +29,15 @@ export function Footer() {
             Sistema operativo académico para instituciones y formadores que necesitan estructura, no más herramientas.
           </p>
           <p className="mt-4 text-caption uppercase tracking-[0.22em] text-primary">
-            Una solución de Noventor
+            Una solución de{" "}
+            <a
+              href={NOVENTOR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-4 hover:underline focus-visible:underline transition-all"
+            >
+              Noventor →
+            </a>
           </p>
         </div>
 
