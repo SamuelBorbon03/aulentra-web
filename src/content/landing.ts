@@ -37,8 +37,7 @@ export const landing = {
     helper:
       "Te contactamos en menos de 48h con información adaptada a tu contexto.",
     submit: "Quiero conocer Aulentra",
-    microcopy:
-      "Sin compromiso. Información adaptada a tu contexto, no plantillas.",
+    microcopy: "Una respuesta concreta a tu caso, no plantillas.",
     perfilOptions: [
       { value: "institucion", label: "Institución educativa" },
       { value: "particular",  label: "Formador particular o independiente" },
