@@ -49,8 +49,72 @@ export default function ProductoPage() {
         </Reveal>
       </SectionWrapper>
 
+      {/* ─── Una experiencia por rol ─── */}
+      <SectionWrapper id="experiencia" tone="bg" spacing="lg" className="border-t border-line-soft">
+        <Reveal><Badge tone="primary">{producto.experiencia.eyebrow}</Badge></Reveal>
+        <Reveal delay={80}>
+          <h2 className="mt-6 text-h1 text-fg font-bold max-w-[780px] leading-tight">
+            {producto.experiencia.headline}
+          </h2>
+        </Reveal>
+        <Reveal delay={160}>
+          <p className="mt-5 text-body-l text-fg-soft max-w-[820px] leading-relaxed">
+            {producto.experiencia.intro}
+          </p>
+        </Reveal>
+
+        <div className="mt-14 space-y-px bg-line-soft border border-line-soft rounded-lg overflow-hidden">
+          {producto.experiencia.items.map((rol, i) => (
+            <Reveal key={rol.code} delay={Math.min(i * 60, 240)}>
+              <div className="bg-bg grid md:grid-cols-[260px_1fr] gap-8 md:gap-10 p-7 md:p-10">
+                {/* Columna izquierda — identidad del rol */}
+                <div className="flex flex-col">
+                  <span className="font-mono text-caption tracking-[0.22em] bg-horizon-gradient-soft bg-clip-text text-transparent mb-3">
+                    {rol.code}
+                  </span>
+                  <p className="text-caption uppercase tracking-[0.18em] text-muted mb-4">
+                    {rol.persona}
+                  </p>
+                  <p className="text-h3 text-fg font-semibold leading-tight">
+                    {rol.promise}
+                  </p>
+                </div>
+
+                {/* Columna derecha — escena + usos */}
+                <div>
+                  <p className="font-serif italic text-body-l text-fg leading-relaxed border-l-2 border-primary/50 pl-5">
+                    {rol.scenario}
+                  </p>
+                  <div className="mt-6 pt-6 border-t border-line-soft">
+                    <p className="font-mono text-caption uppercase tracking-[0.18em] text-muted mb-3">
+                      Lo que hace aquí
+                    </p>
+                    <ul className="flex flex-wrap gap-2">
+                      {rol.uses.map((use) => (
+                        <li
+                          key={use}
+                          className="inline-flex items-center px-3 py-1.5 rounded-pill text-caption tracking-normal normal-case text-fg-soft bg-card border border-line"
+                        >
+                          {use}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={300} className="mt-12 max-w-[720px]">
+          <p className="font-serif italic text-body-l text-fg border-l-2 border-primary pl-5">
+            {producto.experiencia.closer}
+          </p>
+        </Reveal>
+      </SectionWrapper>
+
       {/* ─── Beneficios ─── */}
-      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line-soft">
         <Reveal><Badge tone="primary">{producto.beneficios.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[780px]">{producto.beneficios.headline}</h2>

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { NAV_LINKS, NAV_CTA } from "./nav-config";
 import { MobileNav } from "./MobileNav";
+import { UserMenu } from "./UserMenu";
 
 export function Header() {
   const pathname = usePathname();
@@ -65,6 +66,7 @@ export function Header() {
             <Button href={NAV_CTA.href} variant="link">
               {NAV_CTA.label}
             </Button>
+            <UserMenu />
           </nav>
 
           <MobileNav />

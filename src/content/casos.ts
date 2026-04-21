@@ -27,6 +27,6 @@ export const casos = {
 
   cierre: {
     body:
-      "Mientras llenamos esta página, conoce el sistema completo en /producto y los roles en /roles.",
+      "Mientras llenamos esta página, conoce el sistema completo en /producto.",
   },
 } as const;

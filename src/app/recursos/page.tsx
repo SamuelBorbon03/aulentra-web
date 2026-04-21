@@ -46,8 +46,6 @@ export default function RecursosPage() {
           <p className="text-body-l text-fg-soft max-w-[760px]">
             Mientras tanto, en{" "}
             <Link href="/producto" className="text-primary hover:underline">/producto</Link>{" "}
-            y{" "}
-            <Link href="/roles" className="text-primary hover:underline">/roles</Link>{" "}
             encuentras la base conceptual completa de Aulentra.
           </p>
         </Reveal>

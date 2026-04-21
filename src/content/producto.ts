@@ -57,6 +57,72 @@ export const producto = {
   closer:
     "Cinco capas, un sistema. Cambiar una no rompe las demás. Agregar algo nuevo encaja — no se agrega encima.",
 
+  // Experiencia por rol — absorbida desde /roles (decisión 2026-04-21).
+  // Copy editorial, escenificado (persona + escena concreta), no jerga abstracta.
+  // Cada rol promete algo distinto: control, ejecución, claridad, visibilidad.
+  experiencia: {
+    eyebrow: "Una experiencia por rol",
+    headline: "Lo mismo para todos. Pero no lo mismo para cada uno.",
+    intro:
+      "Aulentra no es un sistema único con vistas distintas. Son cuatro experiencias que comparten la misma columna vertebral — y cada persona entra directamente a la suya.",
+    items: [
+      {
+        code: "ADMIN",
+        persona: "Dirección académica",
+        promise: "Control total.",
+        scenario:
+          "Lunes, 7:15 AM. Abre Aulentra y en una sola vista encuentra: asistencia del viernes, docentes sin plan de clase registrado, tres incidencias que requieren intervención. Antes de la primera clase del día ya tiene decididas sus acciones.",
+        uses: [
+          "Configura la estructura",
+          "Asigna personas y grupos",
+          "Define calendario académico",
+          "Ve la institución completa",
+        ],
+      },
+      {
+        code: "TEACHER",
+        persona: "Docente",
+        promise: "Ejecución sin fricción.",
+        scenario:
+          "Entre clase y clase abre la app en el celular. Ve su plan del día, su grupo del momento, y un espacio para cargar la nota que acaba de calificar. No abre ocho pestañas. No busca. Entra, hace, sale.",
+        uses: [
+          "Plan del día",
+          "Calificaciones y evaluaciones",
+          "Seguimiento por grupo",
+          "Observaciones pedagógicas",
+        ],
+      },
+      {
+        code: "STUDENT",
+        persona: "Estudiante",
+        promise: "Claridad sobre su proceso.",
+        scenario:
+          "Entra al terminar su última clase. Ve sus tareas ordenadas por fecha, el feedback que le dejó su profesora, su progreso de la semana. Sabe qué sigue sin tener que preguntarlo — y su acudiente no tiene que recordárselo.",
+        uses: [
+          "Tareas y fechas",
+          "Feedback docente",
+          "Progreso académico",
+          "Ruta del periodo",
+        ],
+      },
+      {
+        code: "GUARDIAN",
+        persona: "Acudiente",
+        promise: "Visibilidad sin ruido.",
+        scenario:
+          "Entra una vez a la semana, tres minutos. Ve cómo va su estudiante, las alertas relevantes, y agenda reuniones con docentes cuando las necesita. No recibe cuarenta notificaciones al día. Está presente sin estorbar.",
+        uses: [
+          "Progreso del estudiante",
+          "Alertas y avisos",
+          "Agenda con docentes",
+          "Información académica clave",
+        ],
+      },
+    ],
+    closer:
+      "Un sistema. Cuatro experiencias. Cero fricción entre ellas.",
+  },
+
   // Beneficios — derivados naturalmente de tener sistema (de 06-beneficios.md)
   beneficios: {
     eyebrow: "Lo que cambia con sistema",

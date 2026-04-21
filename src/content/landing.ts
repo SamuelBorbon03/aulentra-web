@@ -107,7 +107,7 @@ export const landing = {
       { code: "STUDENT",  core: "Experiencia organizada." },
       { code: "GUARDIAN", core: "Visibilidad." },
     ],
-    link: { label: "Conoce los cuatro roles", href: "/roles" },
+    link: { label: "Conoce los cuatro roles", href: "/producto#experiencia" },
   },
 
   // — CTA final (de 02-copy/08-cta.md, sin la palabra "demo")

@@ -36,6 +36,6 @@ export const recursos = {
 
   cierre: {
     body:
-      "Mientras tanto, en /producto y /roles encuentras la base conceptual completa de Aulentra.",
+      "Mientras tanto, en /producto encuentras la base conceptual completa de Aulentra.",
   },
 } as const;
