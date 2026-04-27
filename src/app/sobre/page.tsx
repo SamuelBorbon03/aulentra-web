@@ -20,7 +20,7 @@ export default function SobrePage() {
       />
 
       {/* ─── Qué es Aulentra ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
         <Reveal><Badge tone="primary">{sobre.quees.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[820px]">{sobre.quees.headline}</h2>
@@ -33,7 +33,7 @@ export default function SobrePage() {
       </SectionWrapper>
 
       {/* ─── Propósito + Visión (2-col) ─── */}
-      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
           <Reveal>
             <Badge tone="primary">{sobre.proposito.eyebrow}</Badge>
@@ -53,7 +53,7 @@ export default function SobrePage() {
       </SectionWrapper>
 
       {/* ─── Para quién (los dos públicos) ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
         <Reveal><Badge tone="neutral">{sobre.paraquien.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[820px]">{sobre.paraquien.headline}</h2>
@@ -78,7 +78,7 @@ export default function SobrePage() {
       </SectionWrapper>
 
       {/* ─── Relación con Noventor ─── */}
-      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line">
         <Reveal><Badge tone="primary">{sobre.noventor.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[820px]">{sobre.noventor.headline}</h2>
@@ -92,22 +92,19 @@ export default function SobrePage() {
         <div className="mt-12 max-w-[820px]">
           <h3 className="text-h3 text-fg font-bold mb-5">{sobre.noventor.porque.title}</h3>
           <div className="border-t border-line">
-            {sobre.noventor.porque.items.map((it, i) => {
-              const [bold, ...rest] = it.split("—");
-              return (
-                <Reveal key={i} delay={(i % 3) * 60}>
-                  <div className="flex gap-4 py-4 border-b border-line">
-                    <div className="font-mono text-caption text-primary tracking-wider min-w-[36px]">
-                      {String(i + 1).padStart(2, "0")}
-                    </div>
-                    <p className="text-body text-fg leading-relaxed">
-                      <strong className="text-fg font-semibold">{bold.trim()}</strong>
-                      {rest.length > 0 && <> — {rest.join("—").trim()}</>}
-                    </p>
+            {sobre.noventor.porque.items.map((it, i) => (
+              <Reveal key={i} delay={(i % 3) * 60}>
+                <div className="flex gap-4 py-4 border-b border-line">
+                  <div className="font-mono text-caption text-primary tracking-wider min-w-[36px]">
+                    {String(i + 1).padStart(2, "0")}
                   </div>
-                </Reveal>
-              );
-            })}
+                  <p className="text-body text-fg leading-relaxed">
+                    <strong className="text-fg font-semibold">{it.bold}</strong>{" "}
+                    {it.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
 

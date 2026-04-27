@@ -8,7 +8,7 @@ import { Provisional } from "@/components/ui/Provisional";
 import { recursos } from "@/content/recursos";
 
 export const metadata: Metadata = {
-  title: "Recursos — Aulentra",
+  title: "Recursos · Aulentra",
   description: recursos.hero.subtitle,
 };
 
@@ -21,7 +21,7 @@ export default function RecursosPage() {
         subtitle={recursos.hero.subtitle}
       />
 
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
         <Reveal>
           <div className="flex items-center gap-3 flex-wrap">
             <Badge tone="neutral">{recursos.categorias.eyebrow}</Badge>
@@ -41,7 +41,7 @@ export default function RecursosPage() {
         </div>
       </SectionWrapper>
 
-      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line">
         <Reveal>
           <p className="text-body-l text-fg-soft max-w-[760px]">
             Mientras tanto, en{" "}

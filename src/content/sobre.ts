@@ -1,79 +1,97 @@
 /**
  * Página /sobre — Identidad de Aulentra + relación con Noventor.
- * Fuentes: 01-context/01-documento-maestro.md, 01-context/04-relacion-con-noventor.md.
+ * Versión final 2026-04-25 alineada al brief institucional definitivo.
  *
- * Identidad de Aulentra (qué es, propósito) extraída literal del doc maestro.
- * Bloque "Relación con Noventor" extraído literal del doc oficial.
+ * Tono: ejecutivo, declarativo, estructural. Sin guiones largos.
+ * Aulentra como consecuencia del método Noventor, no como producto suelto.
  */
 
 export const sobre = {
   hero: {
     eyebrow: "Sobre Aulentra",
-    headline: "Aulentra transforma la manera en que una institución funciona.",
+    headline: "Aulentra no cambia lo que haces. Cambia cómo funciona.",
     subtitle:
       "No reemplaza tus procesos. Los estructura. No digitaliza el caos. Lo ordena.",
   },
 
-  // — Qué es Aulentra (de 01-documento-maestro.md § 2)
+  // — Qué es Aulentra
   quees: {
     eyebrow: "Qué es Aulentra",
     headline: "Aulentra es un sistema. No una herramienta más.",
     body: [
-      "Aulentra nace como una respuesta estructural a un problema silencioso pero constante en la educación: la falta de un sistema claro, integrado y confiable para organizar la operación académica.",
-      "No se limita a resolver tareas individuales. No se limita a digitalizar procesos. Aulentra transforma la manera en que una institución funciona.",
+      "La operación académica está fragmentada por diseño. Plataformas distintas para tareas, comunicación, gestión y datos. Cada una resuelve una parte. Ninguna sostiene el todo.",
+      "No estamos proponiendo una mejor forma de trabajar.",
+      "Estamos eliminando la necesidad de improvisar.",
+      "Aulentra unifica esa operación. No digitaliza procesos. Estructura la institución entera dentro de una sola arquitectura.",
     ],
   },
 
-  // — Propósito (síntesis del documento maestro)
+  // — Propósito
   proposito: {
     eyebrow: "Propósito",
-    body: "Aulentra existe para que toda institución educativa o formador independiente opere sobre un sistema, no sobre un conjunto de herramientas desconectadas.",
+    body:
+      "Aulentra existe para que toda institución educativa o formador independiente opere sobre un sistema. No sobre un conjunto de herramientas desconectadas.",
   },
 
-  // — Visión (de 02-copy/07-vision.md)
+  // — Visión
   vision: {
     eyebrow: "Visión",
     headline: "Aulentra crece con la institución.",
     body:
-      "No es un sistema que se ajusta cuando la institución cambia. Es un sistema que escala como escala tu institución — porque está diseñado para ser estructura, no herramienta.",
+      "No es un sistema que se ajusta cuando la institución cambia. Es un sistema que escala como escala tu institución. Está diseñado para ser estructura. No herramienta.",
     contrast: [
       "Lo que funciona con 50 estudiantes funciona con 5.000.",
       "Lo que sostiene una sede sostiene diez.",
     ],
   },
 
-  // — Para quién (declaración explícita de los dos públicos)
+  // — Para quién
   paraquien: {
     eyebrow: "Para quién",
     headline: "Aulentra está pensado para dos públicos.",
     items: [
       {
         title: "Instituciones educativas",
-        body: "Colegios, universidades, academias y centros formativos que necesitan organizar la operación completa en un solo sistema coherente.",
+        body:
+          "Colegios, universidades, academias y centros formativos que necesitan organizar la operación completa en un solo sistema coherente.",
       },
       {
         title: "Formadores particulares o independientes",
-        body: "Maestros, tutores y educadores que enseñan por cuenta propia y necesitan estructura sin tener que armar la suya desde cero.",
+        body:
+          "Maestros, tutores y educadores que enseñan por cuenta propia y necesitan estructura sin tener que armar la suya desde cero.",
       },
     ],
-    cierre:
-      "El sistema es el mismo. La escala se adapta a tu contexto.",
+    cierre: "El sistema es el mismo. La escala se adapta a tu contexto.",
   },
 
-  // — Relación con Noventor (de 01-context/04-relacion-con-noventor.md)
+  // — Relación con Noventor
   noventor: {
     eyebrow: "Una solución de Noventor",
-    headline: "Aulentra es una marca de Noventor.",
+    headline: "Aulentra no nace como producto. Es una consecuencia del método Noventor.",
     body: [
       "Aulentra no es una empresa independiente. No es un spin-off. Es una solución creada por Noventor tras investigar las problemáticas del sector educativo institucional y de los formadores particulares.",
+      "Noventor no construye herramientas.",
+      "Construye sistemas que hacen que dejen de ser necesarias.",
       "Noventor es una empresa de progreso empresarial que utiliza investigación, innovación y tecnología como instrumentos para resolver problemáticas reales en sectores que necesitan transformación. Aulentra es la primera de sus marcas.",
     ],
     porque: {
       title: "Por qué importa esta conexión",
       items: [
-        "Legitimidad — Aulentra no es un proyecto suelto. Tiene una empresa detrás con método, visión y estructura.",
-        "Coherencia — Un visitante que conoce ambas webs percibe un sistema, no dos proyectos aislados.",
-        "Escalabilidad — El método Noventor garantiza que Aulentra evoluciona con disciplina, no por moda.",
+        {
+          bold: "Legitimidad.",
+          body:
+            "Aulentra no es un proyecto suelto. Tiene una empresa detrás con método, visión y estructura.",
+        },
+        {
+          bold: "Coherencia.",
+          body:
+            "Un visitante que conoce ambas webs percibe un sistema. No dos proyectos aislados.",
+        },
+        {
+          bold: "Escalabilidad.",
+          body:
+            "El método Noventor garantiza que Aulentra evoluciona con disciplina. No por moda.",
+        },
       ],
     },
   },

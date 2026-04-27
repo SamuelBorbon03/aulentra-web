@@ -21,7 +21,7 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Aulentra — Sistema operativo académico",
+  title: "Aulentra · Sistema operativo académico",
   description:
     "Aulentra organiza, conecta y estructura toda la operación de una institución educativa. En una sola capa. Sin fricciones. Sin caos.",
   keywords: [

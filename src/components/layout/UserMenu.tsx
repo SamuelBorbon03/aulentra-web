@@ -1,15 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/cn";
 import {
   type Profile,
   type AuthState,
   mockLookup,
   displayName,
+  buildSessionFromLogin,
+  saveSession,
+  loadSession,
+  clearSession,
 } from "@/lib/aulentra-auth";
 
 export function UserMenu() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Profile>("institution");
   const [auth, setAuth] = useState<AuthState>({ kind: "idle" });
@@ -24,6 +30,23 @@ export function UserMenu() {
   const [recoveryRole, setRecoveryRole] = useState<"ADMIN" | "TEACHER" | "STUDENT" | "GUARDIAN" | "">("");
   const [recoveryCaptcha, setRecoveryCaptcha] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Hidrata sesión persistida (post-mount para evitar mismatch SSR).
+  useEffect(() => {
+    const session = loadSession();
+    if (session) {
+      setAuth({
+        kind: "authenticated",
+        user: {
+          name: session.user.name,
+          email: session.user.email,
+          profile: session.user.profile,
+          institutionName:
+            session.data.kind === "institution" ? session.data.institution.name : undefined,
+        },
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -64,15 +87,23 @@ export function UserMenu() {
         setAuth({ kind: "error", message: "wrong_tab", suggestedTab: lookup.profile });
         return;
       }
+      // Persiste sesión enriquecida y navega directo a /mi-espacio.
+      const session = buildSessionFromLogin(email, lookup.profile);
+      if (session) saveSession(session);
       setAuth({
         kind: "authenticated",
         user: {
-          name: displayName(email),
+          name: session?.user.name ?? displayName(email),
           email: email.trim().toLowerCase(),
           profile: lookup.profile,
-          institutionName: lookup.institutionName,
+          institutionName:
+            session?.data.kind === "institution"
+              ? session.data.institution.name
+              : lookup.institutionName,
         },
       });
+      setOpen(false);
+      router.push("/mi-espacio");
     }, 900);
   };
 
@@ -125,10 +156,16 @@ export function UserMenu() {
   };
 
   const handleLogout = () => {
+    clearSession();
     setAuth({ kind: "idle" });
     setEmail("");
     setPassword("");
     resetRecoveryFields();
+  };
+
+  const handleGoToEspacio = () => {
+    setOpen(false);
+    router.push("/mi-espacio");
   };
 
   const goToRecovery = () => {
@@ -224,14 +261,14 @@ export function UserMenu() {
                 </span>
               </div>
 
-              <a
-                href="#"
-                onClick={(e) => e.preventDefault()}
+              <button
+                type="button"
+                onClick={handleGoToEspacio}
                 className="group flex items-center justify-between w-full px-4 py-3 rounded-md bg-horizon-gradient text-white font-semibold text-small hover:brightness-105 transition"
               >
                 <span>Ir a mi espacio</span>
                 <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </a>
+              </button>
 
               <div className="mt-5 pt-5 border-t border-line-soft space-y-2">
                 <button type="button" onClick={(e) => e.preventDefault()} className="block w-full text-left text-small text-fg-soft hover:text-primary transition-colors py-1">

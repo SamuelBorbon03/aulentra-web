@@ -16,10 +16,10 @@ const base =
 const variants: Record<Variant, string> = {
   // Primario — gradiente Horizon saturado sobre dark. Texto blanco semibold.
   primary:
-    "rounded-md px-7 py-3 bg-horizon-gradient text-white font-semibold text-base hover:opacity-90 active:scale-[0.98] shadow-md hover:shadow-lg",
-  // Secundario — borde fg-soft con fondo transparente, hover suave.
+    "rounded-md px-7 py-3 bg-horizon-gradient text-white font-semibold text-base shadow-md hover:shadow-lg hover:-translate-y-[1px] hover:brightness-110 active:translate-y-0 active:scale-[0.98]",
+  // Secundario — borde fg-soft con fondo transparente, hover sobrio.
   secondary:
-    "rounded-md px-7 py-3 border-[1.5px] border-line-strong text-fg font-medium text-base hover:border-primary hover:text-primary hover:bg-primary-light",
+    "rounded-md px-7 py-3 border-[1.5px] border-line-strong text-fg font-medium text-base hover:border-primary hover:text-primary hover:bg-primary-light hover:-translate-y-[1px] active:translate-y-0",
   // Link — primary soft con flecha.
   link:
     "text-primary hover:text-primary-hover font-medium text-base underline-offset-4 decoration-[1.5px] hover:underline after:content-['→'] after:ml-1 after:transition-transform after:duration-200 hover:after:translate-x-0.5",

@@ -7,9 +7,9 @@ import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { NAV_LINKS, NAV_CTA } from "./nav-config";
+import { NAV_CTA, NAV_LOGIN } from "./nav-config";
+import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
-import { UserMenu } from "./UserMenu";
 
 export function Header() {
   const pathname = usePathname();
@@ -30,6 +30,10 @@ export function Header() {
     };
   }, []);
 
+  // Mi espacio tiene su propio chrome (topbar + sidebar). Early return DEBE ir
+  // después de todos los hooks para no violar las rules of hooks de React.
+  if (pathname.startsWith("/mi-espacio")) return null;
+
   return (
     <header
       className={cn(
@@ -40,35 +44,31 @@ export function Header() {
       )}
     >
       <Container>
-        <div className="flex h-20 items-center justify-between">
-          <Link href="/" aria-label="Ir al inicio" className="inline-flex items-center">
+        <div className="flex h-20 items-center justify-between gap-6">
+          {/* IZQUIERDA — logo */}
+          <Link href="/" aria-label="Ir al inicio" className="inline-flex items-center shrink-0">
             <Wordmark tone="fg" size="md" withSymbol />
           </Link>
 
-          <nav aria-label="Navegación principal" className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "text-small font-medium transition-colors relative",
-                    active
-                      ? "text-primary after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-[26px] after:h-px after:bg-horizon-gradient-soft"
-                      : "text-fg/80 hover:text-fg"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <Button href={NAV_CTA.href} variant="link">
+          {/* CENTRO — dropdowns (desktop lg+) */}
+          <div className="flex-1 flex justify-center">
+            <DesktopNav />
+          </div>
+
+          {/* DERECHA — acceder + CTA (desktop) */}
+          <div className="hidden lg:flex items-center gap-5 shrink-0">
+            <Link
+              href={NAV_LOGIN.href}
+              className="text-small font-medium text-fg/75 hover:text-fg transition-colors"
+            >
+              {NAV_LOGIN.label}
+            </Link>
+            <Button href={NAV_CTA.href} variant="primary" className="!py-2.5 !px-5 !text-small">
               {NAV_CTA.label}
             </Button>
-            <UserMenu />
-          </nav>
+          </div>
 
+          {/* Mobile — hamburger */}
           <MobileNav />
         </div>
       </Container>

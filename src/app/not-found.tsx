@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
-  title: "Página no encontrada — Aulentra",
+  title: "Página no encontrada · Aulentra",
   description: "Esta página no se encuentra. Volvamos al inicio.",
 };
 

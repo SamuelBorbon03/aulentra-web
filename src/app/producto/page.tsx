@@ -6,9 +6,22 @@ import { Reveal } from "@/components/ui/Reveal";
 import { producto } from "@/content/producto";
 
 export const metadata: Metadata = {
-  title: "Producto — Aulentra",
-  description: producto.intro,
+  title: "Producto · Aulentra",
+  description: producto.intro.filter(Boolean).join(" "),
 };
+
+/** Agrupa líneas en párrafos cuando hay strings vacíos como separadores. */
+function groupLines(lines: readonly string[]): string[][] {
+  const groups: string[][] = [[]];
+  for (const line of lines) {
+    if (line === "") {
+      if (groups[groups.length - 1].length > 0) groups.push([]);
+    } else {
+      groups[groups.length - 1].push(line);
+    }
+  }
+  return groups.filter((g) => g.length > 0);
+}
 
 export default function ProductoPage() {
   return (
@@ -20,9 +33,17 @@ export default function ProductoPage() {
       />
 
       {/* ─── 5 capas ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
         <Reveal>
-          <p className="text-body-l text-fg max-w-[820px]">{producto.intro}</p>
+          <div className="text-body-l text-fg max-w-[820px] leading-relaxed space-y-4">
+            {groupLines(producto.intro).map((group, i) => (
+              <p key={i}>
+                {group.map((line, j) => (
+                  <span key={j} className="block">{line}</span>
+                ))}
+              </p>
+            ))}
+          </div>
         </Reveal>
 
         <div className="mt-10 border-t border-line">
@@ -50,7 +71,7 @@ export default function ProductoPage() {
       </SectionWrapper>
 
       {/* ─── Una experiencia por rol ─── */}
-      <SectionWrapper id="experiencia" tone="bg" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper id="experiencia" tone="bg" spacing="lg" className="border-t border-line">
         <Reveal><Badge tone="primary">{producto.experiencia.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[780px] leading-tight">
@@ -58,9 +79,15 @@ export default function ProductoPage() {
           </h2>
         </Reveal>
         <Reveal delay={160}>
-          <p className="mt-5 text-body-l text-fg-soft max-w-[820px] leading-relaxed">
-            {producto.experiencia.intro}
-          </p>
+          <div className="mt-5 text-body-l text-fg-soft max-w-[820px] leading-relaxed space-y-4">
+            {groupLines(producto.experiencia.intro).map((group, i) => (
+              <p key={i}>
+                {group.map((line, j) => (
+                  <span key={j} className="block">{line}</span>
+                ))}
+              </p>
+            ))}
+          </div>
         </Reveal>
 
         <div className="mt-14 space-y-px bg-line-soft border border-line-soft rounded-lg overflow-hidden">
@@ -85,7 +112,7 @@ export default function ProductoPage() {
                   <p className="font-serif italic text-body-l text-fg leading-relaxed border-l-2 border-primary/50 pl-5">
                     {rol.scenario}
                   </p>
-                  <div className="mt-6 pt-6 border-t border-line-soft">
+                  <div className="mt-6 pt-6 border-t border-line">
                     <p className="font-mono text-caption uppercase tracking-[0.18em] text-muted mb-3">
                       Lo que hace aquí
                     </p>
@@ -114,7 +141,7 @@ export default function ProductoPage() {
       </SectionWrapper>
 
       {/* ─── Beneficios ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line-soft">
+      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
         <Reveal><Badge tone="primary">{producto.beneficios.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[780px]">{producto.beneficios.headline}</h2>

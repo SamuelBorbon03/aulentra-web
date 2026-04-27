@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { NAV_LINKS } from "./nav-config";
@@ -17,7 +20,11 @@ const NOVENTOR_URL =
   process.env.NEXT_PUBLIC_NOVENTOR_URL ?? "http://localhost:3000";
 
 export function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
+
+  // Mi espacio tiene chrome propio; no mostramos footer público ahí.
+  if (pathname.startsWith("/mi-espacio")) return null;
 
   return (
     <footer className="border-t border-line-soft bg-bg-deep">
@@ -26,7 +33,7 @@ export function Footer() {
         <div className="py-14 border-b border-line-soft">
           <Wordmark tone="fg" size="md" withSymbol />
           <p className="mt-5 text-body-l text-fg-soft max-w-[520px] leading-relaxed">
-            Sistema operativo académico para instituciones y formadores que necesitan estructura, no más herramientas.
+            Sistema operativo académico para instituciones que necesitan estructura.
           </p>
           <p className="mt-4 text-caption uppercase tracking-[0.22em] text-primary">
             Una solución de{" "}
@@ -85,7 +92,7 @@ export function Footer() {
             <div className="text-caption uppercase tracking-[0.22em] text-fg/50 mb-5">Contacto</div>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/#cta-form" className="text-small text-fg/75 hover:text-primary transition-colors">
+                <Link href="/producto" className="text-small text-fg/75 hover:text-primary transition-colors">
                   Conocer Aulentra
                 </Link>
               </li>
