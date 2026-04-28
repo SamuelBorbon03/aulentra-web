@@ -1,8 +1,14 @@
 /**
- * Nav config Aulentra — versión final post-brief 2026-04-25.
+ * Nav config Aulentra — NAV-A (Sprint C · 2026-04-28).
  *
- * Estructura plana y sobria con 3 grupos. Sin dropdowns vacíos.
- * Items sin página propia se marcan `comingSoon: true` y quedan inactivos.
+ * Estructura cerrada: 3 grupos · 6 items reales · 1 comingSoon.
+ * Sin anchors falsos. Sin items duplicados.
+ *
+ * Reglas:
+ *   · Click en label de grupo SIEMPRE abre dropdown (también en grupos
+ *     con un solo item · evita "lleva a /producto sin previsualizar").
+ *   · Cada item lleva a una página dedicada (no a fragmentos).
+ *   · `comingSoon: true` = item visible pero no clickeable.
  */
 
 export type NavItem = {
@@ -26,16 +32,6 @@ export const NAV_GROUPS: NavGroup[] = [
         href: "/producto",
         description: "La arquitectura del sistema.",
       },
-      {
-        label: "Cómo funciona",
-        href: "/producto#como-funciona",
-        description: "Arquitectura en cinco capas.",
-      },
-      {
-        label: "Capacidades",
-        href: "/producto#capacidades",
-        description: "Cómo opera dentro de tu institución.",
-      },
     ],
   },
   {
@@ -43,12 +39,12 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       {
         label: "Instituciones educativas",
-        href: "/producto",
+        href: "/soluciones/instituciones",
         description: "Colegios, universidades y centros formativos.",
       },
       {
         label: "Formadores independientes",
-        href: "/producto",
+        href: "/soluciones/formadores",
         description: "Consultores, equipos y profesionales autónomos.",
       },
     ],
@@ -64,7 +60,7 @@ export const NAV_GROUPS: NavGroup[] = [
       {
         label: "Sobre Aulentra",
         href: "/sobre",
-        description: "Quiénes construyen el sistema.",
+        description: "¿Por qué existe Aulentra?",
       },
       {
         label: "Sobre Noventor",
@@ -81,8 +77,8 @@ export const NAV_LOGIN = { label: "Acceder", href: "/acceso" } as const;
 // CTA principal — solicitud de acceso para prospectos
 export const NAV_CTA = { label: "Solicitar acceso", href: "/solicitar-acceso" } as const;
 
-// Compat — algunos componentes todavía leen NAV_LINKS. Mapeo plano a los grupos.
-export const NAV_LINKS = NAV_GROUPS.map((g) => ({
-  label: g.label,
-  href: g.items.find((i) => i.href)?.href ?? "#",
-})) as readonly { label: string; href: string }[];
+// Compat — algunos componentes (Footer) leen NAV_LINKS. Mapeo plano a primer item de cada grupo.
+export const NAV_LINKS = NAV_GROUPS.map((g) => {
+  const firstReal = g.items.find((i) => i.href);
+  return { label: g.label, href: firstReal?.href ?? "#" };
+}) as readonly { label: string; href: string }[];

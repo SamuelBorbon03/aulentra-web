@@ -42,15 +42,10 @@ export function AulentraHero() {
         {/* Wordmark + tagline · sin símbolo arriba (vive como sigilo de fondo) */}
         <Reveal>
           <div className="relative flex flex-col items-center">
-            <div
-              className="text-[32px] md:text-[40px] font-bold tracking-[0.18em] bg-clip-text text-transparent leading-none"
-              style={{
-                backgroundImage: "linear-gradient(90deg,#A5B4FC 0%,#93C5FD 50%,#67E8F9 100%)",
-              }}
-            >
+            <div className="text-wordmark-sm md:text-wordmark bg-clip-text text-transparent leading-none bg-horizon-gradient-h-wordmark">
               AULENTRA
             </div>
-            <div className="mt-3 text-[11px] md:text-[12px] uppercase tracking-[0.36em] text-fg-soft/40 whitespace-nowrap">
+            <div className="mt-3 text-caption-mono-xs md:text-caption-mono-sm uppercase text-text-subtle whitespace-nowrap">
               Sistema operativo académico
             </div>
           </div>
@@ -60,18 +55,13 @@ export function AulentraHero() {
         <Reveal delay={120}>
           <h1 className="mt-10 text-display font-bold text-fg leading-[1.02] tracking-[-0.025em] max-w-[780px] mx-auto">
             <span className="block">Una institución funciona como un sistema.</span>
-            <span className="block text-fg/55">O no funciona.</span>
+            <span className="block text-text-subtle">O no funciona.</span>
           </h1>
         </Reveal>
 
         {/* Afirmación · 32px del headline · subordinada en peso · gradient como acento */}
         <Reveal delay={240}>
-          <div
-            className="mt-8 inline-block text-h2 md:text-h1 font-semibold leading-[1.1] tracking-[-0.015em] bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 50%,#67E8F9 100%)",
-            }}
-          >
+          <div className="mt-8 inline-block text-h2 md:text-h1 font-semibold leading-[1.1] tracking-[-0.015em] bg-clip-text text-transparent bg-horizon-gradient-h-soft">
             No cambia lo que haces. Cambia cómo funciona.
           </div>
         </Reveal>
@@ -90,7 +80,7 @@ export function AulentraHero() {
 
         {/* Micro institucional · 24px de los CTAs */}
         <Reveal delay={460}>
-          <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-fg-soft/35">
+          <p className="mt-6 font-mono text-micro uppercase text-text-subtle">
             Acceso por organización autorizada
           </p>
         </Reveal>
@@ -112,23 +102,18 @@ function CapitulosTabla() {
         {CAPITULOS.map((c) => (
           <div key={c.title} className="text-center">
             <div className="relative pb-2.5 mb-3">
-              <h3 className="font-sans text-[13px] font-bold tracking-[0.18em] uppercase text-fg">
+              <h3 className="font-sans text-caption-mono uppercase text-fg">
                 {c.title}
               </h3>
-              <div
-                className="absolute left-[14%] right-[14%] bottom-0 h-[1px] opacity-70"
-                style={{
-                  background:
-                    "linear-gradient(90deg, transparent 0%, #A5B4FC 30%, #67E8F9 70%, transparent 100%)",
-                }}
-              />
+              <div className="absolute left-[14%] right-[14%] bottom-0 h-[1px] opacity-70 bg-horizon-fade-h" />
             </div>
             <ul className="space-y-1.5">
               {c.items.map((item, idx) => (
                 <li
                   key={item}
+                  /* 12px: matriz P12 cerrada · escala fijada en hero (excepción visual). */
                   className={`text-[12px] leading-snug ${
-                    idx === 0 ? "text-fg/85 font-medium" : "text-fg-soft/65"
+                    idx === 0 ? "text-text-default font-medium" : "text-text-muted"
                   }`}
                 >
                   {item}
@@ -144,23 +129,18 @@ function CapitulosTabla() {
         {CAPITULOS.map((c) => (
           <div key={c.title} className="text-center">
             <div className="relative pb-2 mb-2.5">
-              <h3 className="font-sans text-[12px] font-bold tracking-[0.20em] uppercase text-fg">
+              <h3 className="font-sans text-caption-mono-sm uppercase text-fg">
                 {c.title}
               </h3>
-              <div
-                className="absolute left-[20%] right-[20%] bottom-0 h-[1px] opacity-70"
-                style={{
-                  background:
-                    "linear-gradient(90deg, transparent 0%, #A5B4FC 30%, #67E8F9 70%, transparent 100%)",
-                }}
-              />
+              <div className="absolute left-[20%] right-[20%] bottom-0 h-[1px] opacity-70 bg-horizon-fade-h" />
             </div>
             <ul className="flex flex-wrap justify-center gap-x-3 gap-y-1">
               {c.items.map((item, idx) => (
                 <li
                   key={item}
+                  /* 11px mobile: matriz P12 cerrada · escala fijada en hero (excepción visual). */
                   className={`text-[11px] ${
-                    idx === 0 ? "text-fg/85 font-medium" : "text-fg-soft/65"
+                    idx === 0 ? "text-text-default font-medium" : "text-text-muted"
                   }`}
                 >
                   {item}

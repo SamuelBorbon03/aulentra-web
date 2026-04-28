@@ -23,10 +23,12 @@ export default function NotFound() {
 
         <Reveal delay={80}>
           <div className="mt-10 flex items-baseline gap-6">
+            {/* 120/180px: single-page display de 404 · escala monumental fuera
+                de la grilla común. Se mantiene como excepción justificada. */}
             <span className="font-mono text-[120px] md:text-[180px] leading-none font-extralight bg-horizon-gradient-soft bg-clip-text text-transparent select-none">
               404
             </span>
-            <span className="text-h2 text-fg/55 italic font-serif leading-tight">
+            <span className="text-h2 text-text-subtle italic font-serif leading-tight">
               Esta página<br />no existe.
             </span>
           </div>

@@ -55,16 +55,16 @@ export function Footer() {
         <div className="py-14 grid md:grid-cols-3 gap-10 md:gap-12">
           {/* Col 1 · Sitio */}
           <div>
-            <div className="text-caption uppercase tracking-[0.22em] text-fg/50 mb-5">Sitio</div>
+            <div className="text-caption uppercase tracking-[0.22em] text-text-muted mb-5">Sitio</div>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/" className="text-small text-fg/75 hover:text-primary transition-colors">
+                <Link href="/" className="text-small text-text-default hover:text-primary transition-colors">
                   Inicio
                 </Link>
               </li>
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-small text-fg/75 hover:text-primary transition-colors">
+                  <Link href={link.href} className="text-small text-text-default hover:text-primary transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -74,41 +74,41 @@ export function Footer() {
 
           {/* Col 2 · Acerca de */}
           <div>
-            <div className="text-caption uppercase tracking-[0.22em] text-fg/50 mb-5">Acerca de</div>
+            <div className="text-caption uppercase tracking-[0.22em] text-text-muted mb-5">Acerca de</div>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/sobre" className="text-small text-fg/75 hover:text-primary transition-colors">
+                <Link href="/sobre" className="text-small text-text-default hover:text-primary transition-colors">
                   Sobre Aulentra
                 </Link>
-                <p className="mt-1 text-caption text-fg/40 tracking-[0.08em] uppercase">
+                <p className="mt-1 text-caption text-text-subtle tracking-[0.08em] uppercase">
                   Una marca de Noventor
                 </p>
               </li>
             </ul>
-            <p className="mt-6 text-small text-fg/45 italic max-w-[260px] leading-relaxed">
+            <p className="mt-6 text-small text-text-subtle italic max-w-[260px] leading-relaxed">
               Aulentra es la primera solución de Noventor.
             </p>
           </div>
 
           {/* Col 3 · Contacto */}
           <div>
-            <div className="text-caption uppercase tracking-[0.22em] text-fg/50 mb-5">Contacto</div>
+            <div className="text-caption uppercase tracking-[0.22em] text-text-muted mb-5">Contacto</div>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/producto" className="text-small text-fg/75 hover:text-primary transition-colors">
+                <Link href="/producto" className="text-small text-text-default hover:text-primary transition-colors">
                   Conocer Aulentra
                 </Link>
               </li>
               <li>
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
-                  className="text-small text-fg/75 hover:text-primary transition-colors"
+                  className="text-small text-text-default hover:text-primary transition-colors"
                 >
                   {CONTACT_EMAIL}
                 </a>
               </li>
               <li>
-                <span className="text-small text-fg/75">Colombia</span>
+                <span className="text-small text-text-default">Colombia</span>
               </li>
             </ul>
           </div>
@@ -116,10 +116,10 @@ export function Footer() {
 
         {/* ─── Línea final ─── */}
         <div className="py-6 border-t border-line-soft flex flex-col md:flex-row gap-3 md:gap-0 md:items-center md:justify-between">
-          <p className="text-small text-fg/45">
+          <p className="text-small text-text-subtle">
             © {currentYear} Noventor. Aulentra es una marca de Noventor.
           </p>
-          <nav aria-label="Legal" className="flex flex-wrap gap-x-5 gap-y-2 text-small text-fg/45">
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-5 gap-y-2 text-small text-text-subtle">
             <PendingLink>Aviso legal</PendingLink>
             <PendingLink>Privacidad</PendingLink>
             <PendingLink>Términos</PendingLink>

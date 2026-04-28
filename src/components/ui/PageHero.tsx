@@ -37,7 +37,7 @@ export function PageHero({
         <Reveal>
           <Link
             href={backHref}
-            className="group inline-flex items-center gap-2 text-small text-fg/55 hover:text-primary transition-colors mb-10"
+            className="group inline-flex items-center gap-2 text-small text-text-subtle hover:text-primary transition-colors mb-10"
           >
             <span
               aria-hidden="true"

@@ -9,9 +9,13 @@
 export const sobre = {
   hero: {
     eyebrow: "Sobre Aulentra",
-    headline: "Aulentra no cambia lo que haces. Cambia cómo funciona.",
+    // Sprint C · C.4 · headline reescrito para abrir con causa, no eslogan.
+    // La frase anterior ("Aulentra no cambia lo que haces. Cambia cómo funciona.")
+    // queda parafraseada en `quees.body` (línea 25) como cierre interno.
+    headline:
+      "Aulentra existe porque la operación educativa no debería sostenerse con esfuerzo.",
     subtitle:
-      "No reemplaza tus procesos. Los estructura. No digitaliza el caos. Lo ordena.",
+      "Aulentra reúne en un solo sistema todo lo que las instituciones y los formadores hoy gestionan en herramientas separadas.",
   },
 
   // — Qué es Aulentra

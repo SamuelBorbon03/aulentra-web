@@ -33,6 +33,15 @@
   --accent:        #7DD3FC;
   --accent-cyan:   #67E8F9;
 
+  /* Texto semántico (Sprint C · A.2) — escala de presencia tipográfica.
+   * Reemplazo progresivo de text-fg/Nx → text-text-{strong|default|muted|subtle|faint}.
+   */
+  --text-strong:  rgba(236, 238, 248, 1);
+  --text-default: rgba(236, 238, 248, 0.85);
+  --text-muted:   rgba(236, 238, 248, 0.65);
+  --text-subtle:  rgba(236, 238, 248, 0.4);
+  --text-faint:   rgba(236, 238, 248, 0.3);
+
   /* Gradientes de marca */
   --horizon-gradient:
     linear-gradient(135deg, #4F46E5 0%, #3B82F6 55%, #06B6D4 100%);
@@ -194,6 +203,53 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: scale(1.15); opacity: 0.15; }
 }
 
+/* ─── PARTE D · /soluciones · sigilo pulse + nucleus pulse + cursor blink + dash loop ─── */
+@keyframes sigilo-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+.animate-sigilo-pulse {
+  animation: sigilo-pulse 4s cubic-bezier(0.4, 0, 0.4, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes nucleus-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.04); opacity: 0.92; }
+}
+.animate-nucleus-pulse {
+  animation: nucleus-pulse 2.4s cubic-bezier(0.4, 0, 0.4, 1) infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+  will-change: transform, opacity;
+}
+
+@keyframes cursor-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.animate-cursor-blink {
+  animation: cursor-blink 1.2s steps(1, end) infinite;
+}
+
+@keyframes dash-flow {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -24; }
+}
+.animate-dash-flow {
+  animation: dash-flow 8s linear infinite;
+}
+
+@keyframes node-ring-pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.5; }
+  50%      { transform: scale(1.45); opacity: 0; }
+}
+.animate-node-ring {
+  animation: node-ring-pulse 2.6s cubic-bezier(0.4, 0, 0.4, 1) infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
   .animate-page-enter { animation: none; }
@@ -207,5 +263,12 @@ h1, h2, h3, h4, h5, h6 {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+  }
+  .animate-sigilo-pulse,
+  .animate-nucleus-pulse,
+  .animate-cursor-blink,
+  .animate-dash-flow,
+  .animate-node-ring {
+    animation: none !important;
   }
 }

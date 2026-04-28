@@ -3,6 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
+import { MasterBoard } from "@/components/sobre/MasterBoard";
 import { sobre } from "@/content/sobre";
 
 export const metadata: Metadata = {
@@ -75,6 +76,11 @@ export default function SobrePage() {
             {sobre.paraquien.cierre}
           </p>
         </Reveal>
+      </SectionWrapper>
+
+      {/* ─── Master Board (Sprint C · C.4) — sistema de marca completo ─── */}
+      <SectionWrapper tone="bg-deep" spacing="2xl" className="border-t border-line">
+        <MasterBoard />
       </SectionWrapper>
 
       {/* ─── Relación con Noventor ─── */}

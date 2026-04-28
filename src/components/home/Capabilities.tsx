@@ -61,10 +61,10 @@ export function Capabilities() {
             <h2 className="lg:col-span-8 text-h1 md:text-display font-bold text-fg leading-[1.02] tracking-[-0.025em]">
               Cuatro capacidades.
               <br />
-              <span className="text-fg/55">Una sola arquitectura.</span>
+              <span className="text-text-subtle">Una sola arquitectura.</span>
             </h2>
             <div className="lg:col-span-4 lg:pl-8 lg:border-l lg:border-line-soft/50">
-              <p className="text-body-l text-fg-soft/70 leading-[1.55]">
+              <p className="text-body-l text-text-muted leading-[1.55]">
                 Cada capacidad resuelve una fractura distinta de la operación académica.
               </p>
             </div>
@@ -98,10 +98,13 @@ export function Capabilities() {
                   aria-hidden="true"
                 />
 
-                {/* Header · número monumental dominante · gradient saturado */}
+                {/* Header · número monumental dominante · gradient saturado.
+                    `translate-y-[2px]` (B7): los numerales font-extralight con
+                    line-height 0.82 quedan ópticamente altos respecto al baseline
+                    del título; este offset corrige la sensación visual. */}
                 <div className="mb-10">
                   <div
-                    className="font-mono text-[80px] md:text-[104px] font-extralight leading-[0.82] tracking-[-0.05em] bg-clip-text text-transparent select-none"
+                    className="font-mono text-numeral-lg md:text-numeral-xl bg-clip-text text-transparent select-none translate-y-[2px]"
                     style={{
                       backgroundImage:
                         "linear-gradient(135deg,rgba(165,180,252,1) 0%,rgba(103,232,249,0.78) 100%)",
@@ -124,8 +127,8 @@ export function Capabilities() {
                       key={j}
                       className={
                         j === 0
-                          ? "text-body text-fg-soft/65 leading-[1.6]"
-                          : "text-small text-fg-soft/30 leading-[1.6] mt-1.5"
+                          ? "text-body text-text-muted leading-[1.6]"
+                          : "text-small text-text-faint leading-[1.6] mt-1.5"
                       }
                     >
                       {line}

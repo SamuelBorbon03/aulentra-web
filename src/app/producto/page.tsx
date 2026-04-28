@@ -3,6 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
+import { Problema } from "@/components/producto/Problema";
 import { producto } from "@/content/producto";
 
 export const metadata: Metadata = {
@@ -31,6 +32,11 @@ export default function ProductoPage() {
         headline={producto.hero.headline}
         subtitle={producto.hero.subtitle}
       />
+
+      {/* ─── Diagnóstico (Sprint C · C.3) — antes de las 5 capas ─── */}
+      <SectionWrapper tone="bg" spacing="xl" className="border-t border-line">
+        <Problema />
+      </SectionWrapper>
 
       {/* ─── 5 capas ─── */}
       <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">

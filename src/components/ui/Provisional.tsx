@@ -46,9 +46,10 @@ export function Provisional({
           "top-3 right-3 md:top-4 md:right-4",
           // tipografía · uppercase, monospace, weight medio, leading apretado
           "font-mono uppercase font-medium leading-none",
-          "text-[9px] tracking-[0.28em] md:text-[10px] md:tracking-[0.32em]",
+          // micro · 10px / micro-xs · 8.5px (mobile) — tokens canónicos.
+          "text-micro-xs md:text-micro",
           // color sin caja
-          "text-fg/30",
+          "text-text-faint",
           // gap interno cuando lleva icono
           withIcon ? "gap-1 md:gap-1.5" : undefined,
           className
@@ -65,7 +66,7 @@ export function Provisional({
     return (
       <span
         {...a11y}
-        className={cn("italic text-fg/35", className)}
+        className={cn("italic text-text-subtle", className)}
         {...props}
       >
         {" · "}
@@ -79,8 +80,8 @@ export function Provisional({
     <span
       {...a11y}
       className={cn(
-        "inline-flex items-center rounded-[6px] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em]",
-        "border border-dashed border-fg/30 text-fg/55 bg-fg/[0.03]",
+        "inline-flex items-center rounded-[6px] px-2 py-0.5 font-mono text-micro uppercase",
+        "border border-dashed border-fg/30 text-text-subtle bg-fg/[0.03]",
         variant === "inline" && "ml-2 align-middle",
         variant === "block" && "mb-3",
         className

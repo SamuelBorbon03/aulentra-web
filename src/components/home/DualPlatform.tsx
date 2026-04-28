@@ -21,12 +21,12 @@ export function DualPlatform() {
             <h2 className="lg:col-span-7 text-h1 md:text-display font-bold text-fg leading-[1.02] tracking-[-0.025em]">
               Dos realidades.
               <br />
-              <span className="text-fg/55">Una misma estructura.</span>
+              <span className="text-text-subtle">Una misma estructura.</span>
             </h2>
             <div className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-line-soft/50">
               <p className="text-body-l text-fg-soft/70 leading-[1.55]">
                 <span className="block">La escala cambia.</span>
-                <span className="block text-fg/85 font-medium">La estructura no.</span>
+                <span className="block text-text-default font-medium">La estructura no.</span>
               </p>
             </div>
           </div>
@@ -109,12 +109,12 @@ function Card({
       {/* Header de la card · index editorial + label */}
       <div className="relative flex items-center gap-4 mb-8">
         <span
-          className="font-mono text-[11px] font-medium tracking-[0.28em] uppercase px-2.5 py-1 rounded-md border"
+          className="font-mono text-caption-mono-xs uppercase px-2.5 py-1 rounded-md border"
           style={{ color: accent, borderColor: `${accent}40`, background: `${accent}0D` }}
         >
           {index}
         </span>
-        <span className="font-mono text-caption uppercase tracking-[0.24em] text-fg-soft/65">
+        <span className="font-mono text-caption uppercase tracking-[0.24em] text-text-muted">
           {label}
         </span>
       </div>
@@ -138,12 +138,12 @@ function Card({
             className="grid grid-cols-[88px_1fr] gap-4 items-baseline pb-5 border-b border-line-soft/40 last:border-b-0 last:pb-0"
           >
             <dt
-              className="font-mono text-[10px] uppercase tracking-[0.24em]"
+              className="font-mono text-micro uppercase"
               style={{ color: `${accent}CC` }}
             >
               {s.k}
             </dt>
-            <dd className="text-small text-fg-soft/85 leading-[1.55]">{s.v}</dd>
+            <dd className="text-small text-text-default leading-[1.55]">{s.v}</dd>
           </div>
         ))}
       </dl>

@@ -41,18 +41,13 @@ export function AccessFinal() {
         <Reveal delay={80}>
           <h2 className="text-h1 md:text-display font-extrabold text-fg leading-[1.0] tracking-[-0.03em]">
             <span className="block">Hoy gestionas tu institución.</span>
-            <span className="block text-fg/55">Mañana puede operarse sola.</span>
+            <span className="block text-text-subtle">Mañana puede operarse sola.</span>
           </h2>
         </Reveal>
 
         {/* Afirmación gradient · peso 700 · cierre del arco con la promesa Aulentra */}
         <Reveal delay={200}>
-          <div
-            className="mt-10 inline-block text-h1 md:text-display font-bold leading-[1.05] tracking-[-0.025em] bg-clip-text text-transparent"
-            style={{
-              backgroundImage: "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 55%,#67E8F9 100%)",
-            }}
-          >
+          <div className="mt-10 inline-block text-h1 md:text-display font-bold leading-[1.05] tracking-[-0.025em] bg-clip-text text-transparent bg-horizon-gradient-h-soft">
             Aulentra construye ese mañana.
           </div>
         </Reveal>
@@ -76,7 +71,7 @@ export function AccessFinal() {
 
         {/* Microcopy institucional · uppercase tracking */}
         <Reveal delay={420}>
-          <p className="mt-10 font-mono text-[10px] uppercase tracking-[0.28em] text-fg-soft/40">
+          <p className="mt-10 font-mono text-micro uppercase text-text-subtle">
             Solo organizaciones autorizadas · *.aulentra.com
           </p>
         </Reveal>

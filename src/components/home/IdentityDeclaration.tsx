@@ -31,7 +31,7 @@ export function IdentityDeclaration() {
         <div className="lg:col-span-5 relative">
           {/* Negación · anchor tipográfico atenuado */}
           <Reveal delay={80}>
-            <h2 className="relative text-[40px] md:text-[48px] leading-[1.05] font-semibold tracking-[-0.02em] text-fg/55">
+            <h2 className="relative text-display-sm md:text-display-lg text-text-subtle">
               <span className="block">No es un LMS.</span>
               <span className="block">No es software</span>
               <span className="block">administrativo.</span>
@@ -78,7 +78,7 @@ export function IdentityDeclaration() {
               </div>
 
               {/* Caption mono debajo del wrapper */}
-              <p className="mt-8 font-mono text-caption uppercase tracking-[0.32em] text-fg-soft/35 text-center">
+              <p className="mt-8 font-mono text-caption uppercase tracking-[0.32em] text-text-subtle text-center">
                 acta · resolución · cédula · constancia
               </p>
             </div>
@@ -89,32 +89,22 @@ export function IdentityDeclaration() {
         <div className="lg:col-span-7 lg:border-l lg:border-line-soft lg:pl-16 space-y-16">
           {/* Afirmación dominante · gradient horizon */}
           <Reveal delay={120}>
-            <h3
-              className="text-[36px] md:text-[44px] font-bold leading-[1.05] tracking-[-0.025em] bg-clip-text text-transparent max-w-[560px]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 55%,#67E8F9 100%)",
-              }}
-            >
+            <h3 className="text-display-xs md:text-display-md font-bold leading-[1.05] tracking-[-0.025em] bg-clip-text text-transparent max-w-[560px] bg-horizon-gradient-h-soft">
               Es la infraestructura sobre la que la institución funciona.
             </h3>
             <div
               aria-hidden
-              className="mt-6 h-px w-12"
-              style={{
-                background:
-                  "linear-gradient(90deg,#A5B4FC 0%,transparent 100%)",
-              }}
+              className="mt-6 h-px w-12 bg-horizon-gradient-h-soft-50"
             />
           </Reveal>
 
           {/* Sub-bloque 1 · diagnóstico + acción · jerarquía cruzada (introduce → afirma) */}
           <Reveal delay={240}>
             <div className="max-w-[520px] space-y-3">
-              <p className="text-[15px] leading-[1.6] text-fg/45">
+              <p className="text-body-soft text-text-subtle">
                 La operación académica está fragmentada por diseño.
               </p>
-              <p className="text-[15px] leading-[1.6] text-fg font-medium tracking-[-0.005em]">
+              <p className="text-body-soft text-text-strong font-medium">
                 Aulentra la unifica en una sola arquitectura.
               </p>
             </div>
@@ -123,10 +113,10 @@ export function IdentityDeclaration() {
           {/* Sub-bloque 2 · consecuencia estructural */}
           <Reveal delay={340}>
             <div className="max-w-[520px] space-y-3">
-              <p className="text-[15px] leading-[1.6] text-fg/45">
+              <p className="text-body-soft text-text-subtle">
                 Una sola fuente de verdad.
               </p>
-              <p className="text-[15px] leading-[1.6] text-fg font-medium tracking-[-0.005em]">
+              <p className="text-body-soft text-text-strong font-medium">
                 Nada queda fuera del sistema.
               </p>
             </div>

@@ -196,7 +196,7 @@ function MobileNavItem({ item, pathname }: { item: NavItem; pathname: string }) 
     return (
       <div className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-md opacity-55 cursor-not-allowed">
         <span className="text-small font-medium text-fg">{item.label}</span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted border border-line-soft rounded-pill px-2 py-0.5 shrink-0">
+        <span className="font-mono text-micro uppercase text-muted border border-line-soft rounded-pill px-2 py-0.5 shrink-0">
           Próximamente
         </span>
       </div>
@@ -207,9 +207,12 @@ function MobileNavItem({ item, pathname }: { item: NavItem; pathname: string }) 
   return (
     <Link
       href={item.href}
+      aria-current={active ? "page" : undefined}
       className={cn(
-        "px-3 py-2.5 rounded-md text-small transition-colors",
-        active ? "text-primary bg-primary/10 font-semibold" : "text-fg-soft hover:text-primary hover:bg-hover"
+        "relative px-3 py-2.5 rounded-md text-small transition-colors",
+        active
+          ? "text-primary bg-primary/10 font-semibold pl-4 border-l-2 border-primary"
+          : "text-fg-soft hover:text-primary hover:bg-hover",
       )}
     >
       {item.label}

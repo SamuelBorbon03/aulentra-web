@@ -112,14 +112,8 @@ export function DocumentoCredencial({
       role="presentation"
       aria-hidden
     >
-      {/* Top accent line */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[1.5px]"
-        style={{
-          background:
-            "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 55%,#67E8F9 100%)",
-        }}
-      />
+      {/* Top accent line · gradient horizon horizontal */}
+      <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-horizon-gradient-h-soft" />
 
       {/* Header · Aulentra Credencial */}
       <div className="flex items-center gap-2 pb-3 mb-3 border-b border-line-soft">
@@ -133,7 +127,7 @@ export function DocumentoCredencial({
           <circle cx="7" cy="7" r="5.5" fill="none" stroke={accent} strokeWidth="1" />
           <circle cx="7" cy="7" r="2.5" fill={accent} opacity="0.6" />
         </svg>
-        <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary">
+        <span className="font-mono text-micro uppercase text-primary">
           Aulentra · Credencial
         </span>
       </div>
@@ -145,7 +139,7 @@ export function DocumentoCredencial({
           return (
             <div
               key={line.k}
-              className="flex items-baseline justify-between gap-3 text-[11px] transition-opacity duration-200"
+              className="flex items-baseline justify-between gap-3 transition-opacity duration-200"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(4px)",
@@ -153,10 +147,10 @@ export function DocumentoCredencial({
                   "opacity 200ms ease-out, transform 200ms cubic-bezier(0.16,1,0.3,1)",
               }}
             >
-              <span className="font-mono text-[8.5px] uppercase tracking-[0.22em] text-fg-soft/55 flex-shrink-0">
+              <span className="font-mono text-micro-xs uppercase text-text-muted flex-shrink-0">
                 {line.k}
               </span>
-              <span className="font-medium text-fg/90 text-right truncate font-mono text-[10px]">
+              <span className="font-medium text-text-default text-right truncate font-mono text-micro">
                 {line.v}
               </span>
             </div>
@@ -167,7 +161,7 @@ export function DocumentoCredencial({
       {/* Sello · solo en variant full */}
       {variant === "full" && (
         <div className="mt-5 pt-4 flex items-center justify-between border-t border-line-soft/50">
-          <span className="font-mono text-[8.5px] uppercase tracking-[0.22em] text-fg-soft/45">
+          <span className="font-mono text-micro-xs uppercase text-text-subtle">
             Firma ─────
           </span>
           <SealArc revealed={sealRevealed} />

@@ -65,7 +65,7 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-5 shrink-0">
             <Link
               href={NAV_LOGIN.href}
-              className="text-small font-medium text-fg/75 hover:text-fg transition-colors"
+              className="text-small font-medium text-text-default hover:text-fg transition-colors"
             >
               {NAV_LOGIN.label}
             </Link>

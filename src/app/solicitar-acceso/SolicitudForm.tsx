@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Field, Input, Textarea } from "@/components/ui/Field";
+import { Spinner } from "@/components/ui/Spinner";
+import { Icon } from "@/components/ui/Icon";
 import { CONTACT_EMAIL } from "@/lib/contact";
 
 /**
@@ -88,16 +91,17 @@ export function SolicitudForm() {
         <Reveal delay={120}>
           <h1 className="mt-8 text-h1 text-fg font-bold leading-[1.1]">
             <span className="block">Hemos recibido tu solicitud.</span>
-            <span className="block">Te contactaremos pronto.</span>
+            <span className="block">
+              Un experto del equipo revisará tu solicitud. Recibirás una respuesta pronto.
+            </span>
           </h1>
         </Reveal>
         <Reveal delay={220}>
           <p className="mt-8 text-body-l text-fg-soft leading-relaxed">
-            Revisaremos tu solicitud y nos pondremos en contacto contigo en los
-            próximos días hábiles. Si tu caso es urgente, escríbenos directo a
+            Revisaremos tu solicitud. También puedes contactarnos directamente a{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="ml-1 text-primary hover:text-primary-hover underline-offset-4 hover:underline transition-colors"
+              className="text-primary hover:text-primary-hover underline-offset-4 hover:underline transition-colors"
             >
               {CONTACT_EMAIL}
             </a>
@@ -148,14 +152,8 @@ export function SolicitudForm() {
           className="mt-12 grid gap-5"
           aria-label="Formulario de solicitud de acceso"
         >
-          <div>
-            <label
-              htmlFor="solicitud-nombre"
-              className="block text-caption uppercase tracking-[0.16em] text-fg-soft/60 mb-2"
-            >
-              Nombre completo
-            </label>
-            <input
+          <Field label="Nombre completo" htmlFor="solicitud-nombre" required>
+            <Input
               id="solicitud-nombre"
               type="text"
               value={nombre}
@@ -163,18 +161,16 @@ export function SolicitudForm() {
               placeholder="Tu nombre y apellido"
               autoComplete="name"
               required
-              className="w-full rounded-md bg-bg-deep border border-line-strong text-fg text-small px-4 py-3 placeholder:text-muted focus:outline-none focus:border-primary/60 transition-colors"
             />
-          </div>
+          </Field>
 
-          <div>
-            <label
-              htmlFor="solicitud-email"
-              className="block text-caption uppercase tracking-[0.16em] text-fg-soft/60 mb-2"
-            >
-              Correo
-            </label>
-            <input
+          <Field
+            label="Correo"
+            htmlFor="solicitud-email"
+            required
+            error={formatError ? "Ingresa un correo con formato válido." : undefined}
+          >
+            <Input
               id="solicitud-email"
               type="email"
               value={email}
@@ -185,32 +181,16 @@ export function SolicitudForm() {
               placeholder="tu@institucion.edu"
               autoComplete="email"
               required
-              aria-invalid={formatError}
-              className={`w-full rounded-md bg-bg-deep border text-fg text-small px-4 py-3 placeholder:text-muted focus:outline-none transition-colors ${
-                formatError
-                  ? "border-[#FCA5A5]/60 focus:border-[#FCA5A5]"
-                  : "border-line-strong focus:border-primary/60"
-              }`}
+              invalid={formatError}
             />
-            {formatError && (
-              <div
-                className="mt-2 flex items-start gap-2 text-[12px]"
-                style={{ color: "#FCA5A5" }}
-              >
-                <span className="mt-px">●</span>
-                <span>Ingresa un correo con formato válido.</span>
-              </div>
-            )}
-          </div>
+          </Field>
 
-          <div>
-            <label
-              htmlFor="solicitud-organizacion"
-              className="block text-caption uppercase tracking-[0.16em] text-fg-soft/60 mb-2"
-            >
-              Institución u organización
-            </label>
-            <input
+          <Field
+            label="Institución u organización"
+            htmlFor="solicitud-organizacion"
+            required
+          >
+            <Input
               id="solicitud-organizacion"
               type="text"
               value={organizacion}
@@ -218,70 +198,38 @@ export function SolicitudForm() {
               placeholder="Universidad, colegio, academia, formador independiente…"
               autoComplete="organization"
               required
-              className="w-full rounded-md bg-bg-deep border border-line-strong text-fg text-small px-4 py-3 placeholder:text-muted focus:outline-none focus:border-primary/60 transition-colors"
             />
-          </div>
+          </Field>
 
-          <div>
-            <label
-              htmlFor="solicitud-mensaje"
-              className="block text-caption uppercase tracking-[0.16em] text-fg-soft/60 mb-2"
-            >
-              Cuéntanos brevemente
-              <span className="ml-2 text-[10px] tracking-[0.2em] text-muted">Opcional</span>
-            </label>
-            <textarea
+          <Field label="Cuéntanos brevemente" htmlFor="solicitud-mensaje" optional>
+            <Textarea
               id="solicitud-mensaje"
               value={mensaje}
               onChange={(e) => setMensaje(e.target.value)}
-              placeholder="¿Qué problema buscan resolver? ¿Cuántos alumnos o equipos involucrados?"
+              placeholder="El contexto que quieras compartir."
               rows={4}
-              className="w-full rounded-md bg-bg-deep border border-line-strong text-fg text-small px-4 py-3 placeholder:text-muted focus:outline-none focus:border-primary/60 transition-colors resize-y"
             />
-          </div>
+          </Field>
 
           <button
             type="submit"
             disabled={!canSubmit}
-            className="mt-2 w-full rounded-md py-3.5 font-semibold text-small tracking-wide text-bg-deep disabled:opacity-40 disabled:cursor-not-allowed transition-opacity flex items-center justify-center gap-2"
-            style={{
-              background:
-                "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 55%,#67E8F9 100%)",
-            }}
+            className="mt-2 w-full rounded-md py-3.5 font-semibold text-small tracking-wide text-bg-deep disabled:opacity-40 disabled:cursor-not-allowed transition-opacity flex items-center justify-center gap-2 bg-horizon-gradient-h-soft"
           >
             {submitting ? (
               <>
-                <svg
-                  className="animate-spin"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="9"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeOpacity="0.3"
-                  />
-                  <path
-                    d="M21 12a9 9 0 00-9-9"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                <Spinner size={14} />
                 Enviando…
               </>
             ) : (
-              <>Enviar solicitud →</>
+              <>
+                Enviar solicitud
+                <Icon name="arrow-right" size={14} />
+              </>
             )}
           </button>
 
-          <p className="text-[11px] text-muted leading-relaxed text-center mt-2">
+          <p className="text-caption-mono-xs text-muted leading-relaxed text-center mt-2 normal-case tracking-normal">
             Al enviar aceptas que el equipo de Aulentra te contacte por correo.
             <br />
             ¿Ya tienes acceso?{" "}

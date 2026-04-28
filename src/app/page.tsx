@@ -1,6 +1,7 @@
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { AulentraHero } from "@/components/home/AulentraHero";
 import { IdentityDeclaration } from "@/components/home/IdentityDeclaration";
+import { Triada } from "@/components/home/Triada";
 import { DualPlatform } from "@/components/home/DualPlatform";
 import { Capabilities } from "@/components/home/Capabilities";
 import { AccessFinal } from "@/components/home/AccessFinal";
@@ -24,7 +25,7 @@ import { AccessFinal } from "@/components/home/AccessFinal";
 export default function HomePage() {
   return (
     <>
-      <SectionWrapper id="hero" tone="bg" spacing="sm" className="!pt-0 !pb-4 md:!pt-1 md:!pb-6">
+      <SectionWrapper id="hero" tone="bg" spacing="flush">
         <AulentraHero />
       </SectionWrapper>
 
@@ -32,15 +33,20 @@ export default function HomePage() {
         <IdentityDeclaration />
       </SectionWrapper>
 
-      <SectionWrapper id="publico" tone="bg" spacing="xl" className="border-t border-line">
+      {/* Triada · Sprint C · C.1 — tres distinciones editoriales antes de DualPlatform */}
+      <SectionWrapper id="triada" tone="bg" spacing="xl" className="border-t border-line">
+        <Triada />
+      </SectionWrapper>
+
+      <SectionWrapper id="publico" tone="bg-deep" spacing="xl" className="border-t border-line">
         <DualPlatform />
       </SectionWrapper>
 
-      <SectionWrapper id="capacidades" tone="bg-deep" spacing="xl" className="border-t border-line">
+      <SectionWrapper id="capacidades" tone="bg" spacing="xl" className="border-t border-line">
         <Capabilities />
       </SectionWrapper>
 
-      <SectionWrapper id="acceso" tone="bg" spacing="xl" className="border-t border-line">
+      <SectionWrapper id="acceso" tone="bg-deep" spacing="xl" className="border-t border-line">
         <AccessFinal />
       </SectionWrapper>
     </>
