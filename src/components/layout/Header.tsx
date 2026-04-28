@@ -30,9 +30,9 @@ export function Header() {
     };
   }, []);
 
-  // Mi espacio tiene su propio chrome (topbar + sidebar). Early return DEBE ir
-  // después de todos los hooks para no violar las rules of hooks de React.
-  if (pathname.startsWith("/mi-espacio")) return null;
+  // Guard `/acceso` (Sprint B-2): el flujo de login es inmersivo · sin chrome.
+  // `/solicitar-acceso` mantiene chrome — es página institucional con form.
+  if (pathname?.startsWith("/acceso")) return null;
 
   return (
     <header
@@ -45,9 +45,15 @@ export function Header() {
     >
       <Container>
         <div className="flex h-20 items-center justify-between gap-6">
-          {/* IZQUIERDA — logo */}
+          {/* IZQUIERDA — logo · Sprint B-2: contracción óptica al scrollear (desktop).
+               En mobile queda fijo en `sm` para no competir con el hamburger. */}
           <Link href="/" aria-label="Ir al inicio" className="inline-flex items-center shrink-0">
-            <Wordmark tone="fg" size="md" withSymbol />
+            <span className="hidden md:inline-flex">
+              <Wordmark tone="fg" size={scrolled ? "sm" : "md"} withSymbol />
+            </span>
+            <span className="md:hidden inline-flex">
+              <Wordmark tone="fg" size="sm" withSymbol />
+            </span>
           </Link>
 
           {/* CENTRO — dropdowns (desktop lg+) */}

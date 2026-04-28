@@ -72,7 +72,7 @@ export function AulentraHero() {
               backgroundImage: "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 50%,#67E8F9 100%)",
             }}
           >
-            Aulentra es ese sistema.
+            No cambia lo que haces. Cambia cómo funciona.
           </div>
         </Reveal>
 

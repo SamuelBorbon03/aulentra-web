@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { NAV_LINKS } from "./nav-config";
+import { CONTACT_EMAIL } from "@/lib/contact";
+import { PendingLink } from "@/components/ui/PendingLink";
 
 /**
  * Footer Aulentra — 3 columnas (Sitio · Acerca de · Contacto) sobre bloque
@@ -23,8 +25,9 @@ export function Footer() {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
 
-  // Mi espacio tiene chrome propio; no mostramos footer público ahí.
-  if (pathname.startsWith("/mi-espacio")) return null;
+  // Guard `/acceso` (Sprint B-2): el flujo de login es inmersivo · sin chrome.
+  // `/solicitar-acceso` mantiene chrome — es página institucional con form.
+  if (pathname?.startsWith("/acceso")) return null;
 
   return (
     <footer className="border-t border-line-soft bg-bg-deep">
@@ -97,8 +100,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-small text-fg/75 hover:text-primary transition-colors">
-                  hola@aulentra.com
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="text-small text-fg/75 hover:text-primary transition-colors"
+                >
+                  {CONTACT_EMAIL}
                 </a>
               </li>
               <li>
@@ -114,9 +120,9 @@ export function Footer() {
             © {currentYear} Noventor. Aulentra es una marca de Noventor.
           </p>
           <nav aria-label="Legal" className="flex flex-wrap gap-x-5 gap-y-2 text-small text-fg/45">
-            <Link href="#" className="hover:text-primary transition-colors">Aviso legal</Link>
-            <Link href="#" className="hover:text-primary transition-colors">Privacidad</Link>
-            <Link href="#" className="hover:text-primary transition-colors">Términos</Link>
+            <PendingLink>Aviso legal</PendingLink>
+            <PendingLink>Privacidad</PendingLink>
+            <PendingLink>Términos</PendingLink>
           </nav>
         </div>
       </Container>

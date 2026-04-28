@@ -37,15 +37,15 @@ export function AccessFinal() {
           </div>
         </Reveal>
 
-        {/* Headline · cierre institucional con peso aumentado · tracking más cerrado */}
+        {/* Headline a 2 voces · arco temporal hoy → mañana */}
         <Reveal delay={80}>
           <h2 className="text-h1 md:text-display font-extrabold text-fg leading-[1.0] tracking-[-0.03em]">
-            <span className="block">La formación no se sostiene con esfuerzo.</span>
-            <span className="block text-fg/55">Se sostiene con sistema.</span>
+            <span className="block">Hoy gestionas tu institución.</span>
+            <span className="block text-fg/55">Mañana puede operarse sola.</span>
           </h2>
         </Reveal>
 
-        {/* Afirmación gradient · peso 700 · tamaño aumentado para cerrar con autoridad */}
+        {/* Afirmación gradient · peso 700 · cierre del arco con la promesa Aulentra */}
         <Reveal delay={200}>
           <div
             className="mt-10 inline-block text-h1 md:text-display font-bold leading-[1.05] tracking-[-0.025em] bg-clip-text text-transparent"
@@ -53,7 +53,7 @@ export function AccessFinal() {
               backgroundImage: "linear-gradient(90deg,#A5B4FC 0%,#7DD3FC 55%,#67E8F9 100%)",
             }}
           >
-            Aulentra es ese sistema.
+            Aulentra construye ese mañana.
           </div>
         </Reveal>
 

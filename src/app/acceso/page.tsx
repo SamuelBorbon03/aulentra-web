@@ -11,6 +11,7 @@ import {
   loadLoginSession,
   savePendingLogin,
 } from "@/lib/aulentra-login";
+import { CONTACT_EMAIL, mailtoUrl } from "@/lib/contact";
 import { TramaGenerativa } from "@/components/access/TramaGenerativa";
 import { DocumentoCredencial } from "@/components/access/DocumentoCredencial";
 
@@ -469,10 +470,10 @@ function RecognizingView({ org }: { org: AulentraOrg }) {
 
 /* ═══════════ Unknown org ═══════════ */
 function UnknownOrgView({ email, onRetry }: { email: string; onRetry: () => void }) {
-  const contactSubject = encodeURIComponent("Consulta sobre acceso institucional a Aulentra");
-  const contactBody = encodeURIComponent(
-    `Hola,\n\nEstoy intentando acceder a Aulentra con el correo ${email} pero mi institución aún no aparece registrada.\n\n¿Pueden ayudarme a coordinar el proceso?\n\nGracias.`
-  );
+  const contactHref = mailtoUrl({
+    subject: "Consulta sobre acceso institucional a Aulentra",
+    body: `Hola,\n\nEstoy intentando acceder a Aulentra con el correo ${email} pero mi institución aún no aparece registrada.\n\n¿Pueden ayudarme a coordinar el proceso?\n\nGracias.`,
+  });
 
   return (
     <div className="animate-fade-in-up">
@@ -515,7 +516,7 @@ function UnknownOrgView({ email, onRetry }: { email: string; onRetry: () => void
           </Link>
 
           <a
-            href={`mailto:hola@aulentra.com?subject=${contactSubject}&body=${contactBody}`}
+            href={contactHref}
             className="flex items-center justify-between gap-3 px-4 py-3.5 rounded-md border border-line-strong hover:border-primary/60 hover:bg-primary/5 transition-colors group"
           >
             <div>
@@ -572,10 +573,10 @@ function GenericErrorView({ onRetry }: { onRetry: () => void }) {
           Intentar nuevamente
         </button>
         <a
-          href="mailto:hola@aulentra.com"
+          href={`mailto:${CONTACT_EMAIL}`}
           className="text-small text-fg-soft/70 hover:text-primary transition-colors"
         >
-          hola@aulentra.com
+          {CONTACT_EMAIL}
         </a>
       </div>
     </div>

@@ -30,6 +30,11 @@ const symbolSizes: Record<"sm" | "md" | "lg", number> = {
 
 /**
  * AulentraSymbol — isotipo oficial del producto (gradiente soft dark).
+ *
+ * Sprint B-2 · 2026-04-27 — `translate-y-[1px]` corrige offset óptico
+ * baseline. El isotipo dibuja con peso visual ligeramente alto dentro del
+ * viewBox, lo que lo hace ver "flotando" respecto al wordmark; este shift
+ * de 1px lo asienta sobre la baseline tipográfica.
  */
 function AulentraSymbol({ size, id }: { size: number; id: string }) {
   return (
@@ -39,7 +44,7 @@ function AulentraSymbol({ size, id }: { size: number; id: string }) {
       width={size}
       height={size}
       aria-hidden="true"
-      className="shrink-0 overflow-visible"
+      className="shrink-0 overflow-visible translate-y-[1px] transition-[width,height] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
     >
       <defs>
         <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -79,7 +84,11 @@ export function Wordmark({
     <span className={cn("inline-flex items-center gap-3", className)} aria-label="Aulentra">
       {withSymbol && <AulentraSymbol size={symbolSizes[size]} id={gradId} />}
       <span
-        className={cn("font-bold uppercase tracking-[0.18em] leading-none", tones[tone], sizes[size])}
+        className={cn(
+          "font-bold uppercase tracking-[0.18em] leading-none transition-[font-size] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          tones[tone],
+          sizes[size]
+        )}
       >
         AULENTRA
       </span>
