@@ -29,3 +29,5 @@ next-env.d.ts
 .vscode/
 .idea/
 *.swp
+
+.claude/
