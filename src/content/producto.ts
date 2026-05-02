@@ -18,7 +18,6 @@ export const producto = {
     "Cada capa sostiene a la siguiente.",
     "",
     "Nada es opcional.",
-    "Nada es modular.",
     "",
     "Aulentra las sostiene.",
   ],
@@ -36,7 +35,7 @@ export const producto = {
       title: "Personas",
       core: "Roles claros. Accesos precisos.",
       body:
-        "Cuatro roles. Administración, Docente, Estudiante, Acudiente. Cada persona ve exactamente lo que necesita ver. Ni más, ni menos.",
+        "Aulentra reconoce los roles que tu institución ya tiene y adapta el acceso de cada persona a su rol. Sin permisos genéricos, sin estructuras impuestas.",
     },
     {
       n: "03",
@@ -129,7 +128,7 @@ export const producto = {
         ],
       },
     ],
-    closer: "Un sistema. Cuatro experiencias. Cero fricción entre ellas.",
+    closer: "Un sistema. Una experiencia por rol. Cero fricción entre ellas.",
   },
 
   // Beneficios — afirmación + razón. Lenguaje narrativo declarativo.

@@ -16,7 +16,9 @@ import { SigiloAulentra } from "../shared/SigiloAulentra";
  */
 export function CierreInstitucional() {
   return (
-    <SectionWrapper tone="bg" spacing="2xl" className="relative overflow-hidden border-t border-line-soft">
+    /* Atmósfera A+B+D · halo={false} — el sigilo grande con halo+pulse local
+       ya gestiona la atmósfera de cierre. */
+    <SectionWrapper tone="bg" spacing="2xl" halo={false} className="relative overflow-hidden border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7">

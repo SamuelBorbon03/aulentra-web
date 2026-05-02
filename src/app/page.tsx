@@ -1,4 +1,5 @@
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { HorizonDivider } from "@/components/ui/HorizonDivider";
 import { AulentraHero } from "@/components/home/AulentraHero";
 import { IdentityDeclaration } from "@/components/home/IdentityDeclaration";
 import { Triada } from "@/components/home/Triada";
@@ -25,28 +26,42 @@ import { AccessFinal } from "@/components/home/AccessFinal";
 export default function HomePage() {
   return (
     <>
-      <SectionWrapper id="hero" tone="bg" spacing="flush">
+      {/* Hero · halo local del lockup (no del sistema) */}
+      <SectionWrapper id="hero" tone="bg" spacing="flush" halo={false}>
         <AulentraHero />
       </SectionWrapper>
 
-      <SectionWrapper id="que-es" tone="bg-deep" spacing="xl" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+
+      {/* IdentityDeclaration · halo "default" sustituye el halo local 460×460 */}
+      <SectionWrapper id="que-es" tone="bg-deep" spacing="xl" halo="default" className="border-t border-line">
         <IdentityDeclaration />
       </SectionWrapper>
 
       {/* Triada · Sprint C · C.1 — tres distinciones editoriales antes de DualPlatform */}
-      <SectionWrapper id="triada" tone="bg" spacing="xl" className="border-t border-line">
+      {/* Transición tonal bg-deep → bg · línea horizon */}
+      <HorizonDivider />
+      <SectionWrapper id="triada" tone="bg" spacing="xl" halo={false} className="border-t border-line">
         <Triada />
       </SectionWrapper>
 
-      <SectionWrapper id="publico" tone="bg-deep" spacing="xl" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+      <SectionWrapper id="publico" tone="bg-deep" spacing="xl" halo={false} className="border-t border-line">
         <DualPlatform />
       </SectionWrapper>
 
-      <SectionWrapper id="capacidades" tone="bg" spacing="xl" className="border-t border-line">
+      {/* Transición tonal bg-deep → bg · línea horizon */}
+      <HorizonDivider />
+      <SectionWrapper id="capacidades" tone="bg" spacing="xl" halo={false} className="border-t border-line">
         <Capabilities />
       </SectionWrapper>
 
-      <SectionWrapper id="acceso" tone="bg-deep" spacing="xl" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+      {/* AccessFinal · cierre · halo local cyan vive en el componente (no en wrapper) */}
+      <SectionWrapper id="acceso" tone="bg-deep" spacing="xl" halo={false} className="border-t border-line">
         <AccessFinal />
       </SectionWrapper>
     </>

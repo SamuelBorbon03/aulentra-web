@@ -11,6 +11,11 @@ import { Icon, type IconName } from "@/components/ui/Icon";
  * 48px 40px · solo `border-bottom 1px line-soft` (no caja completa, mantiene
  * sensación editorial).
  *
+ * Sprint C · D-fix · 2026-04-27 · Uniform height · `auto-rows-fr` en el
+ * grid + Reveal/article con `h-full flex flex-col` para que las 4 cards
+ * alineen su borde inferior incluso cuando los headlines tienen 1 vs
+ * 2 líneas.
+ *
  * Íconos extendidos en whitelist Sprint C-D:
  *   users / book-open / clipboard-check / mail
  */
@@ -42,7 +47,8 @@ const CAPACIDADES: Array<{ icon: IconName; title: string; body: string }> = [
 
 export function CapacidadesGrid() {
   return (
-    <SectionWrapper tone="bg" spacing="2xl" className="border-t border-line-soft">
+    /* Atmósfera A+B+D · halo="closure" — cyan que cierra el arco. */
+    <SectionWrapper tone="bg" spacing="2xl" halo="closure" className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">
@@ -60,12 +66,12 @@ export function CapacidadesGrid() {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 border-t border-line-soft">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:auto-rows-fr border-t border-line-soft">
           {CAPACIDADES.map((c, i) => (
-            <Reveal key={c.title} delay={260 + i * 90}>
+            <Reveal key={c.title} delay={260 + i * 90} className="h-full">
               <article
                 className={[
-                  "group relative px-10 py-12 md:px-12 md:py-14 border-b border-line-soft",
+                  "group relative h-full flex flex-col px-10 py-12 md:px-12 md:py-14 border-b border-line-soft",
                   // Línea vertical separadora interna en md+ (solo segundo de cada fila)
                   i % 2 === 0 ? "md:border-r md:border-line-soft" : "",
                 ].join(" ")}

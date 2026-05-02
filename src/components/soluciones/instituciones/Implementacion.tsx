@@ -40,7 +40,9 @@ const MOMENTOS = [
 
 export function Implementacion() {
   return (
-    <SectionWrapper tone="bg-deep" spacing="2xl" className="relative overflow-hidden border-t border-line-soft">
+    /* Atmósfera A+B+D · halo="closure" — el closure cyan vive AQUÍ, no en
+       CierreInstitucional (que tiene su propio sigilo+pulso). */
+    <SectionWrapper tone="bg-deep" spacing="2xl" halo="closure" className="relative overflow-hidden border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">

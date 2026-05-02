@@ -11,7 +11,10 @@ import { SectionWrapper } from "@/components/ui/SectionWrapper";
  */
 export function Manifiesto() {
   return (
-    <SectionWrapper tone="bg-deep" spacing="2xl" className="relative overflow-hidden border-t border-line-soft">
+    /* Atmósfera A+B+D · halo={false}: el Manifiesto mantiene SU línea
+       atmospheric preexistente (60%) — funcionalmente actúa como divisor
+       in-section, no como sección con halo. */
+    <SectionWrapper tone="bg-deep" spacing="2xl" halo={false} className="relative overflow-hidden border-t border-line-soft">
       {/* Línea horizon atmosférica · 100vw · 60% altura */}
       <div
         aria-hidden

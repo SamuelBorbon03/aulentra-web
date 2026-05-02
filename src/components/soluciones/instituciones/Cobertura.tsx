@@ -59,7 +59,8 @@ const PROCESOS = [
 
 export function Cobertura() {
   return (
-    <SectionWrapper tone="bg-deep" spacing="2xl" className="border-t border-line-soft">
+    /* Atmósfera A+B+D · halo="default" — refuerzo medio del scroll. */
+    <SectionWrapper tone="bg-deep" spacing="2xl" halo="default" className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">

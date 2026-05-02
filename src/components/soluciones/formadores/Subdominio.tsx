@@ -59,7 +59,8 @@ export function Subdominio() {
   }, [reduceMotion]);
 
   return (
-    <SectionWrapper tone="bg" spacing="2xl" className="border-t border-line-soft">
+    /* Atmósfera A+B+D · halo="default" — refuerzo medio del scroll. */
+    <SectionWrapper tone="bg" spacing="2xl" halo="default" className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">
@@ -77,20 +78,36 @@ export function Subdominio() {
           </p>
         </Reveal>
 
-        {/* VERIFICAR con Samuel: si subdominio aplica a formadores */}
-        <span className="sr-only" data-verify-with-samuel>
-          VERIFICAR con Samuel: si la promesa &quot;tu subdominio&quot; aplica realmente a formadores
-          particulares en el modelo final, o si es exclusiva de instituciones.
-        </span>
+        {/*
+         * VERIFICAR con Samuel:
+         *   Si la promesa "tu subdominio" aplica realmente a formadores
+         *   particulares en el modelo final, o si es exclusiva de instituciones.
+         *
+         * Antes vivía como `<span className="sr-only">` para que apareciera en
+         * el DOM como nota interna. Lo movimos a comentario JSX en el fix QA
+         * 2026-04-28 porque ese span — aunque visualmente clip-pado — era el
+         * causante real del overflow horizontal mobile (scrollWidth interno
+         * 1078px sobre clientWidth 1px se propagaba a documentElement.scrollWidth).
+         */}
 
-        {/* URL bar editorial */}
+        {/* URL bar editorial.
+         *
+         * Fix QA 2026-04-28 · overflow horizontal mobile:
+         *   El clamp original `40-8vw-80` causaba overflow real ~90px en
+         *   iPhone SE (375px) porque "mfernandez.aulentra.com" a 40px en
+         *   font-mono supera el viewport. Bajamos el min a 28px — a esa
+         *   medida la URL completa cabe dentro de 375px con margen sano.
+         *   El max 80px desktop se preserva. Defensa adicional:
+         *   `max-w-full + flex-wrap` para que en cualquier viewport
+         *   estrecho el segmento ".aulentra.com" pueda colapsar a línea
+         *   nueva en lugar de hacer overflow horizontal del documento. */}
         <Reveal delay={260}>
           <div className="my-16 md:my-20">
             <div
               className="font-mono leading-none tracking-[-0.03em] text-text-strong text-center"
-              style={{ fontSize: "clamp(40px, 8vw, 80px)", fontWeight: 700 }}
+              style={{ fontSize: "clamp(28px, 8vw, 80px)", fontWeight: 700 }}
             >
-              <span className="inline-flex items-center">
+              <span className="inline-flex items-center justify-center flex-wrap max-w-full">
                 <span
                   className="bg-clip-text text-transparent bg-horizon-gradient-h-wordmark inline-block"
                   style={{

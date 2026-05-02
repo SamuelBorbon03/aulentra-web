@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { HorizonDivider } from "@/components/ui/HorizonDivider";
 import { Reveal } from "@/components/ui/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -20,7 +21,7 @@ export default function EnfoquePage() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <SectionWrapper tone="bg" spacing="lg">
+      <SectionWrapper tone="bg" spacing="lg" halo="default">
         <div className="max-w-[880px]">
           <Reveal>
             <Badge tone="primary">{enfoque.hero.eyebrow}</Badge>
@@ -43,8 +44,11 @@ export default function EnfoquePage() {
         </div>
       </SectionWrapper>
 
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+
       {/* ─── Bloque declarativo (manifiesto en serif italic) ─── */}
-      <SectionWrapper tone="bg-deep" spacing="xl" className="border-t border-line">
+      <SectionWrapper tone="bg-deep" spacing="xl" halo="default" className="border-t border-line">
         <div className="max-w-[820px] mx-auto">
           <div className="space-y-10 font-serif italic text-fg">
             {enfoque.declarative.stanzas.map((stanza, i) => (
@@ -62,8 +66,11 @@ export default function EnfoquePage() {
         </div>
       </SectionWrapper>
 
+      {/* Transición tonal bg-deep → bg · línea horizon */}
+      <HorizonDivider />
+
       {/* ─── Pilares ─── */}
-      <SectionWrapper tone="bg" spacing="xl" className="border-t border-line">
+      <SectionWrapper tone="bg" spacing="xl" halo={false} className="border-t border-line">
         <div className="grid md:grid-cols-2 gap-px bg-line-soft border border-line-soft rounded-lg overflow-hidden">
           {enfoque.pillars.map((p, i) => (
             <Reveal key={p.n} delay={Math.min(i * 80, 240)}>
@@ -79,8 +86,11 @@ export default function EnfoquePage() {
         </div>
       </SectionWrapper>
 
-      {/* ─── Cierre + CTA ─── */}
-      <SectionWrapper tone="bg-deep" spacing="xl" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── Cierre + CTA · halo cyan closure ─── */}
+      <SectionWrapper tone="bg-deep" spacing="xl" halo="closure" className="border-t border-line">
         <div className="max-w-[720px] mx-auto text-center">
           <Reveal>
             <div className="font-serif italic text-fg text-[1.75rem] md:text-[2rem] leading-[1.4] font-normal tracking-tight space-y-1">

@@ -1,22 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 /**
  * SistemaRoles · Sección 3 de /soluciones/instituciones.
  *
- * Sprint C · D.1 · 2026-04-28.
+ * Sprint atmósfera · Estratos editoriales · 2026-04-28 · REEMPLAZO TOTAL.
+ * Designer + Samuel descartaron el iceberg orgánico (silueta Bezier única) por
+ * lectura ambigua. Esta versión implementa la spec híbrida P1 + columna Función
+ * de P5 — entregada y validada por Samuel:
  *
- * Visual: SVG inline custom · "mapa de territorios" (no grid) · 5 zonas
- * orgánicas con paths Bezier (Gobierno · Gestión académica · Operación ·
- * Comunidad · Datos) · cada zona con 2-4 nodos punto + etiqueta lateral ·
- * placeholder dashed "+ activar nuevo rol" · hover sube zona a opacity 0.16
- * + translateY(-2px). viewBox 0 0 720 480.
+ *   · Cinco bandas tipográficas separadas por reglas horizon (gradient
+ *     horizontal token bg-horizon-fade-h).
+ *   · Grid 12 columnas en desktop: numeral · zona+roles · función · anotación.
+ *   · Banda OPERACIÓN como "corazón del sistema": tipografía display,
+ *     halo radial cyan latido (heartbeat-cyan) local a la banda.
+ *   · Regla "waterline" entre II y III: única regla con glow cyan superpuesto.
+ *   · Anotaciones laterales LO VISIBLE (banda I) y LO PROFUNDO (banda IV).
+ *   · "+ Activar nueva capa" en cursiva al final.
  *
- * 3 bloques cortos en grid 1×3 alineados con la promesa "el sistema crece
- * cuando tu institución crece".
+ * Modelo de roles · validado por Samuel:
+ *   I.   GOBIERNO          → Junta directiva · Rectoría · Auditoría    · DIRECCIÓN
+ *   II.  GESTIÓN ACADÉMICA → Coordinación · Tutoría · Programas         · COORDINACIÓN
+ *   III. OPERACIÓN ◉       → Docentes · Estudiantes · Acudientes        · PEDAGOGÍA
+ *   IV.  COMUNIDAD         → Bienestar · Soporte                        · ACOMPAÑAMIENTO
+ *   V.   DATOS             → Infraestructura · Reportes                 · OBSERVACIÓN
+ *
+ * Atmósfera: SectionWrapper.halo sigue `false` (no toca el sistema A+B+D).
+ * El halo cyan vive LOCAL a la banda III via clase `.banda-core` definida
+ * en globals.css (animación heartbeat-cyan 2.4s loop).
+ *
+ * Animación: stagger 180ms top→bottom (entrada por banda + regla inferior),
+ * cubic-bezier(0.22, 0.61, 0.36, 1), 720ms cada banda. "+ Activar nueva capa"
+ * fade 1200ms con delay 1100ms. Heartbeat halo: loop infinito 2.4s.
+ *
+ * MANTIENE: eyebrow + headline + subhead + bloque "Capas del sistema" +
+ * grid 3 BLOCKS final.
  */
 const BLOCKS = [
   {
@@ -35,7 +57,9 @@ const BLOCKS = [
 
 export function SistemaRoles() {
   return (
-    <SectionWrapper tone="bg" spacing="2xl" className="border-t border-line-soft">
+    /* halo={false} mantenido (sprint atmósfera A+B+D · 2026-04-28).
+       La banda III gestiona su propio halo cyan local. */
+    <SectionWrapper tone="bg" spacing="2xl" halo={false} className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">
@@ -53,8 +77,19 @@ export function SistemaRoles() {
           </p>
         </Reveal>
 
-        <Reveal delay={260}>
-          <MapaTerritorios />
+        <Reveal delay={240}>
+          <div className="mb-8">
+            <div className="text-caption-mono-xs text-text-muted uppercase">
+              Capas del sistema
+            </div>
+            <p className="mt-2 font-serif italic text-caption text-text-subtle">
+              Lo visible es solo una parte. El sistema sostiene también lo que no se ve.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={300}>
+          <Estratos />
         </Reveal>
 
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 border-t border-line-soft pt-14">
@@ -75,207 +110,351 @@ export function SistemaRoles() {
 }
 
 /* ─────────────────────────────────────────────────────────────────
- * MapaTerritorios — 5 zonas orgánicas + nodos + zona placeholder
+ * Datos · ZONES (inline · validado por Samuel · modelo B)
  * ─────────────────────────────────────────────────────────────────*/
 
+type SideAnnotation =
+  | { kind: "visible-marker"; text: "── LO VISIBLE" }
+  | { kind: "profundo-marker"; text: "── LO PROFUNDO" }
+  | { kind: "core"; text: "◉ corazón del sistema" }
+  | null;
+
 interface Zone {
-  id: string;
+  numeral: "I" | "II" | "III" | "IV" | "V";
   label: string;
-  /** Path Bezier que delimita la zona */ d: string;
-  /** Nodos dentro de la zona */ nodes: { x: number; y: number }[];
-  /** Posición de la etiqueta */ labelAt: { x: number; y: number; anchor: "start" | "middle" | "end" };
-  /** Color del fill / stroke */ tone: "primary" | "accent";
+  roles: string[];
+  funcion: string;
+  sideAnnotation: SideAnnotation;
+  isCore: boolean;
 }
 
 const ZONES: Zone[] = [
   {
-    id: "gobierno",
-    label: "Gobierno",
-    // arriba-izquierda · suave forma de óvalo deformado
-    d: "M 70 60 Q 60 30 140 30 Q 230 25 270 70 Q 280 110 230 140 Q 170 165 110 145 Q 60 130 70 60 Z",
-    nodes: [
-      { x: 130, y: 70 },
-      { x: 195, y: 80 },
-      { x: 165, y: 120 },
-    ],
-    labelAt: { x: 75, y: 175, anchor: "start" },
-    tone: "primary",
+    numeral: "I",
+    label: "GOBIERNO",
+    roles: ["Junta directiva", "Rectoría", "Auditoría"],
+    funcion: "DIRECCIÓN",
+    sideAnnotation: { kind: "visible-marker", text: "── LO VISIBLE" },
+    isCore: false,
   },
   {
-    id: "gestion",
-    label: "Gestión académica",
-    // centro-superior derecha
-    d: "M 320 50 Q 360 25 460 40 Q 545 60 555 130 Q 555 195 470 200 Q 380 205 340 165 Q 295 120 320 50 Z",
-    nodes: [
-      { x: 380, y: 80 },
-      { x: 450, y: 95 },
-      { x: 495, y: 145 },
-      { x: 405, y: 165 },
-    ],
-    labelAt: { x: 470, y: 235, anchor: "middle" },
-    tone: "primary",
+    numeral: "II",
+    label: "GESTIÓN ACADÉMICA",
+    roles: ["Coordinación", "Tutoría", "Programas"],
+    funcion: "COORDINACIÓN",
+    sideAnnotation: null,
+    isCore: false,
   },
   {
-    id: "operacion",
-    label: "Operación",
-    // centro-bajo · zona ancha
-    d: "M 150 220 Q 130 260 160 310 Q 210 360 320 360 Q 430 365 470 320 Q 500 270 460 230 Q 400 200 320 215 Q 240 230 150 220 Z",
-    nodes: [
-      { x: 210, y: 270 },
-      { x: 280, y: 290 },
-      { x: 350, y: 305 },
-      { x: 420, y: 290 },
-    ],
-    labelAt: { x: 320, y: 405, anchor: "middle" },
-    tone: "accent",
+    numeral: "III",
+    label: "OPERACIÓN",
+    roles: ["Docentes", "Estudiantes", "Acudientes"],
+    funcion: "PEDAGOGÍA",
+    sideAnnotation: { kind: "core", text: "◉ corazón del sistema" },
+    isCore: true,
   },
   {
-    id: "comunidad",
-    label: "Comunidad",
-    // izquierda media-baja
-    d: "M 35 250 Q 25 290 55 340 Q 95 390 165 390 Q 200 395 200 360 Q 195 320 145 295 Q 90 270 35 250 Z",
-    nodes: [
-      { x: 80, y: 305 },
-      { x: 135, y: 335 },
-      { x: 175, y: 365 },
-    ],
-    labelAt: { x: 50, y: 425, anchor: "start" },
-    tone: "accent",
+    numeral: "IV",
+    label: "COMUNIDAD",
+    roles: ["Bienestar", "Soporte"],
+    funcion: "ACOMPAÑAMIENTO",
+    sideAnnotation: { kind: "profundo-marker", text: "── LO PROFUNDO" },
+    isCore: false,
   },
   {
-    id: "datos",
-    label: "Datos",
-    // derecha media-baja
-    d: "M 540 240 Q 590 250 605 305 Q 615 365 565 395 Q 510 415 490 380 Q 480 340 510 305 Q 525 270 540 240 Z",
-    nodes: [
-      { x: 555, y: 295 },
-      { x: 585, y: 345 },
-      { x: 525, y: 365 },
-    ],
-    labelAt: { x: 605, y: 425, anchor: "end" },
-    tone: "primary",
+    numeral: "V",
+    label: "DATOS",
+    roles: ["Infraestructura", "Reportes"],
+    funcion: "OBSERVACIÓN",
+    sideAnnotation: null,
+    isCore: false,
   },
 ];
 
-function MapaTerritorios() {
-  const [hoverId, setHoverId] = useState<string | null>(null);
+/* Tiempos · stagger entrada y "+ Activar nueva capa" */
+const STAGGER_MS = 180;
+const BAND_DURATION_MS = 720;
+const ACTIVAR_DELAY_MS = 5 * STAGGER_MS + 200; // 1100ms (5 bandas terminan stagger)
+const ACTIVAR_DURATION_MS = 1200;
+const EASE_OUT = "cubic-bezier(0.22, 0.61, 0.36, 1)";
+
+/* ─────────────────────────────────────────────────────────────────
+ * <Estratos /> — orquesta bandas + reglas horizon + activar nueva capa
+ * ─────────────────────────────────────────────────────────────────*/
+function Estratos() {
+  const reduceMotion = usePrefersReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setActive(true);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(true);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -40px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduceMotion]);
 
   return (
-    <svg
-      role="img"
-      aria-label="Mapa de territorios institucionales · cinco zonas orgánicas conectadas con espacio para activar nuevos roles"
-      viewBox="0 0 720 480"
-      className="w-full h-auto"
-      style={{ maxWidth: "clamp(420px, 50vw, 720px)" }}
-    >
-      <defs>
-        <linearGradient id="zone-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"  stopColor="#A5B4FC" stopOpacity="0.10" />
-          <stop offset="100%" stopColor="#A5B4FC" stopOpacity="0.04" />
-        </linearGradient>
-        <linearGradient id="zone-accent" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"  stopColor="#67E8F9" stopOpacity="0.09" />
-          <stop offset="100%" stopColor="#67E8F9" stopOpacity="0.03" />
-        </linearGradient>
-      </defs>
+    <div ref={ref} role="group" aria-label="Cinco capas del sistema institucional">
+      {/* Regla horizon antes de la primera banda */}
+      <HorizonRule
+        kind="default"
+        active={active}
+        reduceMotion={reduceMotion}
+        delayMs={0}
+      />
 
-      {/* Zonas */}
-      {ZONES.map((z) => {
-        const isHover = hoverId === z.id;
+      {ZONES.map((zone, i) => {
+        const bandDelay = reduceMotion ? 0 : i * STAGGER_MS;
+        // La regla bajo cada banda aparece sincronizada con la banda inferior:
+        // - regla bajo banda i = aparece junto con banda i (entra al mismo tiempo)
+        const ruleDelay = reduceMotion ? 0 : i * STAGGER_MS;
+        // Excepción: la regla entre II y III (i=1, divisor inferior de banda II)
+        // es la "waterline" — visualmente más cargada.
+        const isWaterlineDivider = i === 1;
+
         return (
-          <g
-            key={z.id}
-            role="group"
-            aria-label={z.label}
-            tabIndex={0}
-            onMouseEnter={() => setHoverId(z.id)}
-            onMouseLeave={() => setHoverId(null)}
-            onFocus={() => setHoverId(z.id)}
-            onBlur={() => setHoverId(null)}
-            style={{
-              transition: "transform 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 320ms ease",
-              transform: isHover ? "translateY(-2px)" : "translateY(0)",
-              transformOrigin: "center",
-              outline: "none",
-              cursor: "default",
-            }}
-          >
-            <path
-              d={z.d}
-              fill={`url(#zone-${z.tone})`}
-              stroke={z.tone === "primary" ? "#A5B4FC" : "#67E8F9"}
-              strokeOpacity={isHover ? 0.55 : 0.30}
-              strokeWidth={1}
-              style={{
-                opacity: isHover ? 1 : 0.85,
-                transition: "stroke-opacity 320ms ease, opacity 320ms ease",
-              }}
+          <div key={zone.numeral}>
+            <EstratoBand
+              zone={zone}
+              active={active}
+              reduceMotion={reduceMotion}
+              delayMs={bandDelay}
             />
-            {z.nodes.map((n, i) => (
-              <circle
-                key={i}
-                cx={n.x}
-                cy={n.y}
-                r={3.2}
-                fill={z.tone === "primary" ? "#A5B4FC" : "#67E8F9"}
-                fillOpacity={isHover ? 1 : 0.80}
-              />
-            ))}
-            <text
-              x={z.labelAt.x}
-              y={z.labelAt.y}
-              textAnchor={z.labelAt.anchor}
-              fontFamily="var(--font-geist-mono), monospace"
-              fontSize="10"
-              fontWeight="700"
-              fill={isHover ? "#A5B4FC" : "#7B82A6"}
-              style={{
-                letterSpacing: "0.20em",
-                textTransform: "uppercase",
-                transition: "fill 320ms ease",
-              }}
-            >
-              {z.label.toUpperCase()}
-            </text>
-          </g>
+            <HorizonRule
+              kind={isWaterlineDivider ? "waterline" : "default"}
+              active={active}
+              reduceMotion={reduceMotion}
+              delayMs={ruleDelay}
+            />
+          </div>
         );
       })}
 
-      {/* Placeholder dashed · "+ activar nuevo rol" */}
-      <g role="group" aria-label="Espacio para activar un nuevo rol">
-        <path
-          d="M 380 220 Q 420 195 480 215 Q 530 240 540 285 Q 545 325 510 340 Q 470 350 430 335 Q 385 315 380 270 Q 378 245 380 220 Z"
-          fill="none"
-          stroke="#363B68"
-          strokeWidth="1"
-          strokeDasharray="4 5"
-          opacity="0.55"
+      {/* "+ Activar nueva capa" — fade lento al final */}
+      <p
+        className="mt-12 text-center font-serif italic text-text-subtle"
+        style={{
+          fontSize: "14px",
+          letterSpacing: "0.02em",
+          opacity: active ? 1 : 0,
+          transition: reduceMotion
+            ? "opacity 300ms ease"
+            : `opacity ${ACTIVAR_DURATION_MS}ms ${EASE_OUT} ${ACTIVAR_DELAY_MS}ms`,
+        }}
+      >
+        + Activar nueva capa
+      </p>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+ * <HorizonRule /> — regla horizontal con gradient horizon-fade-h.
+ * Variante "waterline" superpone glow cyan blur 2px (entre banda II y III).
+ * ─────────────────────────────────────────────────────────────────*/
+function HorizonRule({
+  kind,
+  active,
+  reduceMotion,
+  delayMs,
+}: {
+  kind: "default" | "waterline";
+  active: boolean;
+  reduceMotion: boolean;
+  delayMs: number;
+}) {
+  const transition = reduceMotion
+    ? "opacity 300ms ease"
+    : `opacity ${BAND_DURATION_MS}ms ${EASE_OUT} ${delayMs}ms`;
+
+  if (kind === "waterline") {
+    return (
+      <div
+        className="relative h-px w-full"
+        aria-hidden="true"
+        style={{
+          opacity: active ? 1 : 0,
+          transition,
+        }}
+      >
+        <div className="absolute inset-0 bg-horizon-fade-h opacity-[0.45]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, transparent 30%, rgb(91 196 255 / 0.32) 50%, transparent 70%, transparent 100%)",
+            filter: "blur(2px)",
+          }}
         />
-        <text
-          x="460"
-          y="280"
-          textAnchor="middle"
-          fontFamily="var(--font-geist-mono), monospace"
-          fontSize="9"
-          fontWeight="500"
-          fill="#7B82A6"
-          style={{ letterSpacing: "0.18em", textTransform: "uppercase" }}
-        >
-          + ACTIVAR
-        </text>
-        <text
-          x="460"
-          y="296"
-          textAnchor="middle"
-          fontFamily="var(--font-geist-mono), monospace"
-          fontSize="9"
-          fontWeight="500"
-          fill="#7B82A6"
-          style={{ letterSpacing: "0.18em", textTransform: "uppercase" }}
-        >
-          NUEVO ROL
-        </text>
-      </g>
-    </svg>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="h-px w-full bg-horizon-fade-h opacity-[0.45]"
+      aria-hidden="true"
+      style={{
+        opacity: active ? 0.45 : 0,
+        transition,
+      }}
+    />
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+ * <EstratoBand /> — una banda completa.
+ * Desktop: grid 12 cols (numeral · zona+roles · función · anotación).
+ * Mobile: flex column con numeral+función en primera fila.
+ * Banda core (III): clase `banda-core` activa halo radial cyan local.
+ * ─────────────────────────────────────────────────────────────────*/
+function EstratoBand({
+  zone,
+  active,
+  reduceMotion,
+  delayMs,
+}: {
+  zone: Zone;
+  active: boolean;
+  reduceMotion: boolean;
+  delayMs: number;
+}) {
+  const transition = reduceMotion
+    ? "opacity 300ms ease"
+    : `opacity ${BAND_DURATION_MS}ms ${EASE_OUT} ${delayMs}ms, transform ${BAND_DURATION_MS}ms ${EASE_OUT} ${delayMs}ms`;
+
+  // Spacing vertical · banda core levanta padding (py-12 mobile / py-16 desktop)
+  const paddingClass = zone.isCore
+    ? "py-10 md:py-12 lg:py-16"
+    : "py-8 md:py-9 lg:py-11";
+
+  // Wrapper aplica `banda-core` solo cuando isCore (halo CSS local).
+  const wrapperClass = [
+    "relative isolate",
+    paddingClass,
+    zone.isCore ? "banda-core" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // Numeral · banda core mayor presencia (text-default vs text-subtle)
+  const numeralClass = zone.isCore
+    ? "font-serif font-normal text-[28px] md:text-[34px] leading-none tracking-[0.02em] text-text-default"
+    : "font-serif font-normal text-[24px] md:text-[28px] leading-none tracking-[0.02em] text-text-subtle";
+
+  // Render zona+roles. Banda core usa display-xs sans (titular). Resto: caption-mono uppercase (etiqueta).
+  const labelNode = zone.isCore ? (
+    <span className="text-display-sm md:text-display-xs uppercase text-text-strong">
+      {zone.label}
+    </span>
+  ) : (
+    <span className="font-mono text-caption-mono uppercase text-text-strong">
+      {zone.label}
+    </span>
+  );
+
+  // Roles continuos con middle-dot literal (espacio + U+00B7 + espacio).
+  const rolesString = zone.roles.join("  ·  ");
+
+  // Margin entre label y roles: banda core mt-5, resto mt-3.
+  const rolesMarginClass = zone.isCore ? "mt-5" : "mt-3";
+
+  // Función · banda core caption-mono-sm text-muted; resto caption-mono-xs text-subtle.
+  const funcionClass = zone.isCore
+    ? "font-mono text-caption-mono-sm uppercase text-text-muted"
+    : "font-mono text-caption-mono-xs uppercase text-text-subtle";
+
+  return (
+    <div
+      className={wrapperClass}
+      style={{
+        opacity: active ? 1 : 0,
+        transform: active ? "translateY(0)" : "translateY(12px)",
+        transition,
+      }}
+    >
+      {/* Mobile · primera fila numeral + función (baseline align) */}
+      <div className="flex justify-between items-baseline md:hidden">
+        <div className={numeralClass}>{zone.numeral}</div>
+        <div className={funcionClass}>{zone.funcion}</div>
+      </div>
+
+      {/* Mobile · zona + roles (full width) */}
+      <div className="mt-3 md:hidden">
+        <div>{labelNode}</div>
+        <p className={`${rolesMarginClass} text-body-soft text-text-muted`}>
+          {rolesString}
+        </p>
+      </div>
+
+      {/* Mobile · anotación lateral (al final del stack) */}
+      {zone.sideAnnotation && (
+        <div className="mt-3 md:hidden">
+          <SideAnnotation annotation={zone.sideAnnotation} />
+        </div>
+      )}
+
+      {/* Desktop · grid 12 cols */}
+      <div className="hidden md:grid md:grid-cols-12 md:gap-x-6 md:items-start">
+        {/* Numeral · col 1 */}
+        <div className={`${numeralClass} md:col-span-1`}>{zone.numeral}</div>
+
+        {/* Zona + roles · col 6 */}
+        <div className="md:col-span-6">
+          <div>{labelNode}</div>
+          <p className={`${rolesMarginClass} text-body-soft text-text-muted`}>
+            {rolesString}
+          </p>
+        </div>
+
+        {/* Función · col 2 */}
+        <div className={`${funcionClass} md:col-span-2`}>{zone.funcion}</div>
+
+        {/* Anotación lateral · col 3 */}
+        <div className="md:col-span-3">
+          {zone.sideAnnotation && (
+            <SideAnnotation annotation={zone.sideAnnotation} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+ * <SideAnnotation /> — anotación lateral derecha.
+ * Tres variantes: visible-marker (banda I) · profundo-marker (banda IV) ·
+ * core (banda III, italic con glifo ◉ U+25C9).
+ * ─────────────────────────────────────────────────────────────────*/
+function SideAnnotation({ annotation }: { annotation: NonNullable<SideAnnotation> }) {
+  if (annotation.kind === "core") {
+    // ◉ glifo Unicode aprobado puntualmente por Samuel (carga semántica).
+    // NO sienta precedente para emojis arbitrarios en otras piezas.
+    return (
+      <span className="font-serif italic text-[13px] leading-tight text-text-muted">
+        {annotation.text}
+      </span>
+    );
+  }
+  // visible-marker / profundo-marker — micro mono uppercase
+  return (
+    <span className="font-mono text-micro uppercase text-text-subtle">
+      {annotation.text}
+    </span>
   );
 }

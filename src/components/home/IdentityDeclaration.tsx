@@ -43,15 +43,8 @@ export function IdentityDeclaration() {
             <div className="mt-16 flex flex-col items-center">
               {/* Wrapper documento + sigilo · ambos centrados, sigilo alineado con el documento */}
               <div className="relative flex items-center justify-center">
-                {/* Halo radial · atmósfera muy sutil centrada con el documento */}
-                <div
-                  aria-hidden
-                  className="absolute w-[460px] h-[460px] pointer-events-none"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(99,102,241,0.05) 0%, rgba(103,232,249,0.02) 40%, transparent 72%)",
-                  }}
-                />
+                {/* Halo local 460×460 retirado 2026-04-28 · el sistema atmósfera
+                    A+B+D cubre el bloque con halo="default" desde el SectionWrapper. */}
 
                 {/* Sigilo isotipo (P1) · centrado con el documento · escala mayor para envolverlo */}
                 <div

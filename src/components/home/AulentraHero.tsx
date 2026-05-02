@@ -193,6 +193,15 @@ function Constelacion() {
         zIndex: 0,
         width: "100vw",
         transform: "translateX(-50%)",
+        opacity: 0.3,
+        // Atmósfera A+B+D · 2026-04-28 · fade vertical en el último 18%
+        // del hero. Evita el corte abrupto con IdentityDeclaration y crea
+        // la transición suave hacia la siguiente sección. SigiloFondo no
+        // se toca: su mask radial ya lo cubre.
+        maskImage:
+          "linear-gradient(to bottom, black 0%, black 82%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, black 0%, black 82%, transparent 100%)",
       }}
     >
       <svg

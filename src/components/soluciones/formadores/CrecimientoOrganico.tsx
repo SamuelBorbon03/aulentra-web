@@ -13,6 +13,17 @@ import { AnimatedPath } from "../shared/AnimatedPath";
  * (etiquetas verticales del SPEC: 30 / 80 / 180 / 300+). `+` editorial al
  * final + curva continúa más allá del frame con stroke-dasharray. Fill
  * gradient sutil debajo de la curva. Trazado animado 1600ms.
+ *
+ * Sprint C · D-fix · 2026-04-27 · viewBox ampliado lateralmente
+ * (1000→1080, 320→340) para que la etiqueta "300+" y su caption
+ * "ESTUDIANTES" no se corten contra el borde derecho. Coordenadas
+ * de curva, hitos y `+` editorial mantenidas.
+ *
+ * Sprint C · D-fix · 2026-04-27 · viewBox ampliado verticalmente
+ * por arriba (y=0 → y=-30, height 340 → 380) para que la etiqueta
+ * "300+" del último hito (y=30, fontSize 22) no se corte contra el
+ * borde superior. Coordenadas internas no cambian; solo el viewBox
+ * gana margen superior.
  */
 const MOMENTOS = [
   {
@@ -44,7 +55,8 @@ const HITOS = [
 
 export function CrecimientoOrganico() {
   return (
-    <SectionWrapper tone="bg-deep" spacing="2xl" className="border-t border-line-soft">
+    /* Atmósfera A+B+D · halo={false} — la curva Bezier ⊕ ya provee atmosphere. */
+    <SectionWrapper tone="bg-deep" spacing="2xl" halo={false} className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">
@@ -90,9 +102,9 @@ function CurvaCrecimiento() {
     <svg
       role="img"
       aria-label="Curva orgánica de crecimiento de la práctica formativa con cuatro hitos · 30, 80, 180 y más de 300 estudiantes"
-      viewBox="0 0 1000 320"
+      viewBox="0 -30 1080 380"
       className="w-full h-auto"
-      style={{ maxWidth: 1000 }}
+      style={{ maxWidth: 1080 }}
     >
       <defs>
         <linearGradient id="curve-fill" x1="0%" y1="100%" x2="0%" y2="0%">

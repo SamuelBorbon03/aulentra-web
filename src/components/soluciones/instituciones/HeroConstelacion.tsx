@@ -23,7 +23,28 @@ import { AnimatedPath } from "../shared/AnimatedPath";
  *
  * viewBox 0 0 560 560 · escalado fluido `clamp(380px, 38vw, 560px)`.
  */
-const CENTER = 280;
+// viewBox ampliado 2026-04-28: 560×560 → 800×580 para acomodar etiquetas
+// largas (INFRAESTRUCTURA, ACUDIENTES, etc.). Centro recolocado a (400, 290)
+// para mantener radios 92/178/248 sin escalar. Margen lateral ≈ 152px,
+// suficiente para las 18 etiquetas en mono 8px tracking 0.22em.
+//
+// Sprint C · D-fix · 2026-04-27: viewBox 800×580 → 880×640 + clamp container
+// 420/44vw/720 → 480/50vw/800 para hacer la constelación más prominente
+// respecto al texto del hero (parent passes lg:col-span-7). Centro recolocado
+// a (440, 320) para mantener todos los radios y conexiones sin tocar polar().
+//
+// Sprint C · D-final · 2026-04-27: expansión XL "más aire, no más zoom".
+// viewBox 880×640 → 1200×880 (+36% ancho, +38% alto). Centro 440,320 →
+// 600,440. Radios polares ampliados ~+47-50% (92/178/248 → 165/300/425)
+// para que las 18 etiquetas respiren sin que los nodos crezcan. Tamaño de
+// nodos casi sin cambio: r central 14→16, demás iguales. font-size labels
+// 12→13. Clamp width: clamp(480-800) → clamp(620, 72vw, 1100). Las
+// animaciones (AnimatedPath, ring-pulse) NO se tocan.
+const CENTER_X = 600;
+const CENTER_Y = 440;
+const RING_1 = 165; // gobierno
+const RING_2 = 300; // gestión
+const RING_3 = 425; // operación
 
 interface Node {
   /** Polar coords */ angle: number; radius: number;
@@ -33,35 +54,35 @@ interface Node {
 }
 
 const RING_GOVERNMENT: Node[] = [
-  { angle: -90,  radius: 92, label: "Dirección",   side: "T", primary: true  },
-  { angle:   0,  radius: 92, label: "Rectoría",    side: "R" },
-  { angle:  90,  radius: 92, label: "Auditoría",   side: "B" },
-  { angle: 180,  radius: 92, label: "Junta",       side: "L" },
+  { angle: -90,  radius: RING_1, label: "Dirección",   side: "T", primary: true  },
+  { angle:   0,  radius: RING_1, label: "Rectoría",    side: "R" },
+  { angle:  90,  radius: RING_1, label: "Auditoría",   side: "B" },
+  { angle: 180,  radius: RING_1, label: "Junta",       side: "L" },
 ];
 
 const RING_MANAGEMENT: Node[] = [
-  { angle: -60, radius: 178, label: "Académica",     side: "R", primary: true },
-  { angle:   0, radius: 178, label: "Admisiones",    side: "R" },
-  { angle:  60, radius: 178, label: "Tesorería",     side: "R" },
-  { angle: 120, radius: 178, label: "Comunicaciones",side: "L" },
-  { angle: 180, radius: 178, label: "Coordinación",  side: "L" },
-  { angle: 240, radius: 178, label: "Tutoría",       side: "L" },
+  { angle: -60, radius: RING_2, label: "Académica",     side: "R", primary: true },
+  { angle:   0, radius: RING_2, label: "Admisiones",    side: "R" },
+  { angle:  60, radius: RING_2, label: "Tesorería",     side: "R" },
+  { angle: 120, radius: RING_2, label: "Comunicaciones",side: "L" },
+  { angle: 180, radius: RING_2, label: "Coordinación",  side: "L" },
+  { angle: 240, radius: RING_2, label: "Tutoría",       side: "L" },
 ];
 
 const RING_OPERATION: Node[] = [
-  { angle: -112, radius: 248, label: "Datos",          side: "T" },
-  { angle:  -68, radius: 248, label: "Docentes",       side: "R", primary: true },
-  { angle:  -22, radius: 248, label: "Estudiantes",    side: "R" },
-  { angle:   24, radius: 248, label: "Acudientes",     side: "R" },
-  { angle:   72, radius: 248, label: "Secretaría",     side: "B" },
-  { angle:  118, radius: 248, label: "Bienestar",      side: "L" },
-  { angle:  168, radius: 248, label: "Soporte",        side: "L" },
-  { angle: -158, radius: 248, label: "Infraestructura",side: "L" },
+  { angle: -112, radius: RING_3, label: "Datos",          side: "T" },
+  { angle:  -68, radius: RING_3, label: "Docentes",       side: "R", primary: true },
+  { angle:  -22, radius: RING_3, label: "Estudiantes",    side: "R" },
+  { angle:   24, radius: RING_3, label: "Acudientes",     side: "R" },
+  { angle:   72, radius: RING_3, label: "Secretaría",     side: "B" },
+  { angle:  118, radius: RING_3, label: "Bienestar",      side: "L" },
+  { angle:  168, radius: RING_3, label: "Soporte",        side: "L" },
+  { angle: -158, radius: RING_3, label: "Infraestructura",side: "L" },
 ];
 
 function polar(angleDeg: number, radius: number): { x: number; y: number } {
   const rad = (angleDeg * Math.PI) / 180;
-  return { x: CENTER + Math.cos(rad) * radius, y: CENTER + Math.sin(rad) * radius };
+  return { x: CENTER_X + Math.cos(rad) * radius, y: CENTER_Y + Math.sin(rad) * radius };
 }
 
 function bezierBetween(a: { x: number; y: number }, b: { x: number; y: number }, curve = 0.18) {
@@ -82,10 +103,10 @@ export function HeroConstelacion() {
     <svg
       role="img"
       aria-label="Constelación institucional · 18 áreas conectadas en tres anillos"
-      viewBox="0 0 560 560"
+      viewBox="0 0 1200 880"
       className="w-full h-auto"
       style={{
-        width: "clamp(380px, 38vw, 560px)",
+        width: "clamp(620px, 72vw, 1100px)",
         maxWidth: "100%",
       }}
     >
@@ -101,28 +122,28 @@ export function HeroConstelacion() {
         </linearGradient>
       </defs>
 
-      {/* Halo radial atmosférico */}
-      <circle cx={CENTER} cy={CENTER} r="270" fill="url(#constelacion-halo)" />
+      {/* Halo radial atmosférico — proporcional al nuevo radio externo */}
+      <circle cx={CENTER_X} cy={CENTER_Y} r={RING_3 + 30} fill="url(#constelacion-halo)" />
 
       {/* 3 anillos guía sutiles */}
-      <circle cx={CENTER} cy={CENTER} r="92"  fill="none" stroke="#363B68" strokeOpacity="0.35" strokeDasharray="2 4" />
-      <circle cx={CENTER} cy={CENTER} r="178" fill="none" stroke="#363B68" strokeOpacity="0.30" strokeDasharray="2 4" />
-      <circle cx={CENTER} cy={CENTER} r="248" fill="none" stroke="#363B68" strokeOpacity="0.25" strokeDasharray="2 4" />
+      <circle cx={CENTER_X} cy={CENTER_Y} r={RING_1} fill="none" stroke="#363B68" strokeOpacity="0.35" strokeDasharray="2 4" />
+      <circle cx={CENTER_X} cy={CENTER_Y} r={RING_2} fill="none" stroke="#363B68" strokeOpacity="0.30" strokeDasharray="2 4" />
+      <circle cx={CENTER_X} cy={CENTER_Y} r={RING_3} fill="none" stroke="#363B68" strokeOpacity="0.25" strokeDasharray="2 4" />
 
       {/* Conexiones entre anillos contiguos · 3 puentes Bezier diagonales */}
       <g stroke="url(#constelacion-ring-stroke)" strokeWidth="0.85" fill="none" strokeOpacity="0.7">
         {/* gobierno → gestión */}
-        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[0].angle, 92), polar(RING_MANAGEMENT[0].angle, 178), 0.12)} duration={1400} delay={120} />
-        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[1].angle, 92), polar(RING_MANAGEMENT[1].angle, 178), 0.12)} duration={1400} delay={200} />
-        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[2].angle, 92), polar(RING_MANAGEMENT[3].angle, 178), 0.12)} duration={1400} delay={280} />
-        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[3].angle, 92), polar(RING_MANAGEMENT[4].angle, 178), 0.12)} duration={1400} delay={360} />
+        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[0].angle, RING_1), polar(RING_MANAGEMENT[0].angle, RING_2), 0.12)} duration={1400} delay={120} />
+        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[1].angle, RING_1), polar(RING_MANAGEMENT[1].angle, RING_2), 0.12)} duration={1400} delay={200} />
+        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[2].angle, RING_1), polar(RING_MANAGEMENT[3].angle, RING_2), 0.12)} duration={1400} delay={280} />
+        <AnimatedPath d={bezierBetween(polar(RING_GOVERNMENT[3].angle, RING_1), polar(RING_MANAGEMENT[4].angle, RING_2), 0.12)} duration={1400} delay={360} />
         {/* gestión → operación */}
-        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[0].angle, 178), polar(RING_OPERATION[1].angle, 248), 0.10)} duration={1400} delay={440} />
-        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[1].angle, 178), polar(RING_OPERATION[2].angle, 248), 0.10)} duration={1400} delay={520} />
-        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[2].angle, 178), polar(RING_OPERATION[4].angle, 248), 0.10)} duration={1400} delay={600} />
-        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[3].angle, 178), polar(RING_OPERATION[5].angle, 248), 0.10)} duration={1400} delay={680} />
-        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[4].angle, 178), polar(RING_OPERATION[6].angle, 248), 0.10)} duration={1400} delay={760} />
-        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[5].angle, 178), polar(RING_OPERATION[7].angle, 248), 0.10)} duration={1400} delay={840} />
+        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[0].angle, RING_2), polar(RING_OPERATION[1].angle, RING_3), 0.10)} duration={1400} delay={440} />
+        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[1].angle, RING_2), polar(RING_OPERATION[2].angle, RING_3), 0.10)} duration={1400} delay={520} />
+        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[2].angle, RING_2), polar(RING_OPERATION[4].angle, RING_3), 0.10)} duration={1400} delay={600} />
+        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[3].angle, RING_2), polar(RING_OPERATION[5].angle, RING_3), 0.10)} duration={1400} delay={680} />
+        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[4].angle, RING_2), polar(RING_OPERATION[6].angle, RING_3), 0.10)} duration={1400} delay={760} />
+        <AnimatedPath d={bezierBetween(polar(RING_MANAGEMENT[5].angle, RING_2), polar(RING_OPERATION[7].angle, RING_3), 0.10)} duration={1400} delay={840} />
       </g>
 
       {/* Conexiones entre nodos contiguos del MISMO anillo · gestión + operación */}
@@ -132,7 +153,7 @@ export function HeroConstelacion() {
           return (
             <AnimatedPath
               key={`mgmt-${i}`}
-              d={bezierBetween(polar(n.angle, 178), polar(next.angle, 178), 0.06)}
+              d={bezierBetween(polar(n.angle, RING_2), polar(next.angle, RING_2), 0.06)}
               duration={1200}
               delay={920 + i * 50}
             />
@@ -143,7 +164,7 @@ export function HeroConstelacion() {
           return (
             <AnimatedPath
               key={`op-${i}`}
-              d={bezierBetween(polar(n.angle, 248), polar(next.angle, 248), 0.05)}
+              d={bezierBetween(polar(n.angle, RING_3), polar(next.angle, RING_3), 0.05)}
               duration={1200}
               delay={1240 + i * 40}
             />
@@ -151,10 +172,19 @@ export function HeroConstelacion() {
         })}
       </g>
 
-      {/* Nodos · pintar al frente */}
+      {/* Nodos · pintar al frente.
+       * Spec D-final 2026-04-27: el "nodo central" simbólico (primary del
+       * anillo de gobierno · "Dirección") se eleva a r=16 para anclar la
+       * constelación visualmente. El resto de los nodos se mantienen IGUAL
+       * (primary del resto = 5, secundarios = 3.2). El crecimiento es del
+       * lienzo (viewBox 1200×880, radios 165/300/425), no del símbolo. */}
       {[...RING_GOVERNMENT, ...RING_MANAGEMENT, ...RING_OPERATION].map((n, i) => {
         const p = polar(n.angle, n.radius);
-        const r = n.primary ? 5 : 3.2;
+        // Nodo más grande SOLO el primary del anillo de gobierno (centro
+        // simbólico de la constelación). Identificamos por radius === RING_1
+        // y primary === true.
+        const isHeart = n.primary === true && n.radius === RING_1;
+        const r = isHeart ? 16 : n.primary ? 5 : 3.2;
         return (
           <g key={`node-${i}`}>
             {n.primary && (
@@ -180,15 +210,17 @@ export function HeroConstelacion() {
         );
       })}
 
-      {/* Etiquetas micro · solo anillo externo (operación) para no saturar */}
+      {/* Etiquetas micro · solo anillo externo (operación) para no saturar.
+       * font-size 12→13 (Designer spec D-final 2026-04-27). Offset 14→18
+       * para dar más aire en el lienzo XL. */}
       <g
         fontFamily="var(--font-geist-mono), monospace"
-        fontSize="8"
+        fontSize="13"
         fill="#7B82A6"
         style={{ letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 500 }}
       >
         {RING_OPERATION.map((n, i) => {
-          const p = polar(n.angle, n.radius + 14);
+          const p = polar(n.angle, n.radius + 18);
           const anchor =
             n.side === "R" ? "start" : n.side === "L" ? "end" : "middle";
           return (

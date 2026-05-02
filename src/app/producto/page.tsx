@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { HorizonDivider } from "@/components/ui/HorizonDivider";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { Problema } from "@/components/producto/Problema";
@@ -33,13 +34,19 @@ export default function ProductoPage() {
         subtitle={producto.hero.subtitle}
       />
 
-      {/* ─── Diagnóstico (Sprint C · C.3) — antes de las 5 capas ─── */}
-      <SectionWrapper tone="bg" spacing="xl" className="border-t border-line">
+      {/* PageHero es austero — sin halo. Transición a Problema con horizon. */}
+      <HorizonDivider />
+
+      {/* ─── Diagnóstico (Sprint C · C.3) — antes de las 5 capas · halo default ─── */}
+      <SectionWrapper tone="bg" spacing="xl" halo="default" className="border-t border-line">
         <Problema />
       </SectionWrapper>
 
-      {/* ─── 5 capas ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── 5 capas · sin halo (refuerzo ya recibido en Problema) ─── */}
+      <SectionWrapper tone="bg-deep" spacing="lg" halo={false} className="border-t border-line">
         <Reveal>
           <div className="text-body-l text-fg max-w-[820px] leading-relaxed space-y-4">
             {groupLines(producto.intro).map((group, i) => (
@@ -76,8 +83,11 @@ export default function ProductoPage() {
         </Reveal>
       </SectionWrapper>
 
-      {/* ─── Una experiencia por rol ─── */}
-      <SectionWrapper id="experiencia" tone="bg" spacing="lg" className="border-t border-line">
+      {/* Transición tonal bg-deep → bg · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── Una experiencia por rol · sin halo ─── */}
+      <SectionWrapper id="experiencia" tone="bg" spacing="lg" halo={false} className="border-t border-line">
         <Reveal><Badge tone="primary">{producto.experiencia.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[780px] leading-tight">
@@ -146,8 +156,11 @@ export default function ProductoPage() {
         </Reveal>
       </SectionWrapper>
 
-      {/* ─── Beneficios ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── Beneficios · halo cyan closure ─── */}
+      <SectionWrapper tone="bg-deep" spacing="lg" halo="closure" className="border-t border-line">
         <Reveal><Badge tone="primary">{producto.beneficios.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[780px]">{producto.beneficios.headline}</h2>

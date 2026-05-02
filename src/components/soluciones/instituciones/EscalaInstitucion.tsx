@@ -32,7 +32,8 @@ const ESCALAS = [
 
 export function EscalaInstitucion() {
   return (
-    <SectionWrapper tone="bg" spacing="2xl" className="border-t border-line-soft">
+    /* Atmósfera A+B+D · halo={false} — sin refuerzo entre Cobertura e Implementación. */
+    <SectionWrapper tone="bg" spacing="2xl" halo={false} className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
           <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">

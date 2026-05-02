@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { HorizonDivider } from "@/components/ui/HorizonDivider";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { MasterBoard } from "@/components/sobre/MasterBoard";
@@ -20,8 +21,11 @@ export default function SobrePage() {
         subtitle={sobre.hero.subtitle}
       />
 
-      {/* ─── Qué es Aulentra ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
+      {/* PageHero austero — sin halo. Transición con horizon. */}
+      <HorizonDivider />
+
+      {/* ─── Qué es Aulentra · halo default ─── */}
+      <SectionWrapper tone="bg-deep" spacing="lg" halo="default" className="border-t border-line">
         <Reveal><Badge tone="primary">{sobre.quees.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[820px]">{sobre.quees.headline}</h2>
@@ -33,8 +37,11 @@ export default function SobrePage() {
         </Reveal>
       </SectionWrapper>
 
-      {/* ─── Propósito + Visión (2-col) ─── */}
-      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line">
+      {/* Transición tonal bg-deep → bg · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── Propósito + Visión (2-col) · sin halo ─── */}
+      <SectionWrapper tone="bg" spacing="lg" halo={false} className="border-t border-line">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
           <Reveal>
             <Badge tone="primary">{sobre.proposito.eyebrow}</Badge>
@@ -53,8 +60,11 @@ export default function SobrePage() {
         </div>
       </SectionWrapper>
 
-      {/* ─── Para quién (los dos públicos) ─── */}
-      <SectionWrapper tone="bg-deep" spacing="lg" className="border-t border-line">
+      {/* Transición tonal bg → bg-deep · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── Para quién (los dos públicos) · sin halo ─── */}
+      <SectionWrapper tone="bg-deep" spacing="lg" halo={false} className="border-t border-line">
         <Reveal><Badge tone="neutral">{sobre.paraquien.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[820px]">{sobre.paraquien.headline}</h2>
@@ -78,13 +88,17 @@ export default function SobrePage() {
         </Reveal>
       </SectionWrapper>
 
-      {/* ─── Master Board (Sprint C · C.4) — sistema de marca completo ─── */}
-      <SectionWrapper tone="bg-deep" spacing="2xl" className="border-t border-line">
+      {/* MasterBoard · sin halo (su isotipo monumental ya es atmósfera). Sin
+          HorizonDivider previo: comparte tone bg-deep con la sección Para quién. */}
+      <SectionWrapper tone="bg-deep" spacing="2xl" halo={false} className="border-t border-line">
         <MasterBoard />
       </SectionWrapper>
 
-      {/* ─── Relación con Noventor ─── */}
-      <SectionWrapper tone="bg" spacing="lg" className="border-t border-line">
+      {/* Transición tonal bg-deep → bg · línea horizon */}
+      <HorizonDivider />
+
+      {/* ─── Relación con Noventor · halo cyan closure ─── */}
+      <SectionWrapper tone="bg" spacing="lg" halo="closure" className="border-t border-line">
         <Reveal><Badge tone="primary">{sobre.noventor.eyebrow}</Badge></Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 text-h1 text-fg font-bold max-w-[820px]">{sobre.noventor.headline}</h2>

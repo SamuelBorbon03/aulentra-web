@@ -15,7 +15,15 @@ export const metadata: Metadata = {
  */
 export default function SolicitarAccesoPage() {
   return (
-    <SectionWrapper tone="bg" spacing="xl">
+    // Atmósfera A+B+D · halo discreto (--halo-alpha-section override 0.040
+    // declarado en globals.css vía .solicitud-form-section). El form sigue
+    // siendo el foco; el halo solo rompe la planicidad del fondo.
+    <SectionWrapper
+      tone="bg"
+      spacing="xl"
+      halo="default"
+      className="solicitud-form-section"
+    >
       <SolicitudForm />
     </SectionWrapper>
   );

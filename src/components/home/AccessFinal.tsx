@@ -11,12 +11,16 @@ import { Reveal } from "@/components/ui/Reveal";
 export function AccessFinal() {
   return (
     <div className="relative max-w-[680px] mx-auto text-center pt-12 md:pt-20">
-      {/* Halo horizon detrás del bloque */}
+      {/* Halo cyan local · cierre de la home (atmósfera A+B+D · 2026-04-28).
+          Base retintada a `--halo-cyan` (#06B6D4) — sigue siendo halo del
+          componente (NO del sistema): permanece local porque el bloque tiene
+          su propio anclaje compositivo. El sistema halo="closure" del wrapper
+          NO se aplica aquí para evitar duplicación. */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[420px] pointer-events-none opacity-50"
         style={{
           background:
-            "radial-gradient(ellipse at center,rgba(99,102,241,0.18) 0%,rgba(6,182,212,0.08) 45%,transparent 75%)",
+            "radial-gradient(ellipse at center,rgb(var(--halo-cyan) / 0.20) 0%,rgb(var(--halo-cyan) / 0.08) 45%,transparent 75%)",
         }}
       />
 

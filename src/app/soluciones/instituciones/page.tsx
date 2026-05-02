@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { Icon } from "@/components/ui/Icon";
+import { HorizonDivider } from "@/components/ui/HorizonDivider";
 
 import { HeroConstelacion } from "@/components/soluciones/instituciones/HeroConstelacion";
 import { Manifiesto } from "@/components/soluciones/instituciones/Manifiesto";
@@ -39,8 +40,10 @@ export const metadata: Metadata = {
 export default function SolucionesInstitucionesPage() {
   return (
     <>
-      {/* ─────────────── HERO · split editorial / constelación ─────────────── */}
-      <SectionWrapper tone="bg" spacing="lg" className="relative overflow-hidden">
+      {/* ─────────────── HERO · split editorial / constelación ───────────────
+          Hero NO recibe halo — la constelación (SVG full-bleed) ES el atmosphere
+          de esta sección. Atmósfera A+B+D · 2026-04-28. */}
+      <SectionWrapper tone="bg" spacing="lg" halo={false} className="relative overflow-hidden">
         <div className="max-w-[1280px] mx-auto">
           <Reveal>
             <Link
@@ -57,8 +60,9 @@ export default function SolucionesInstitucionesPage() {
           </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Copy · 6 cols */}
-            <div className="lg:col-span-6">
+            {/* Copy · 4 cols (D-final 2026-04-27 · 5→4: el texto cede 1 col más
+             * para que la constelación XL respire en su columna 8/12). */}
+            <div className="lg:col-span-4">
               <Reveal delay={60}>
                 <Badge tone="primary">Soluciones · Instituciones educativas</Badge>
               </Reveal>
@@ -88,8 +92,10 @@ export default function SolucionesInstitucionesPage() {
               <Reveal delay={380} className="mt-10 h-px w-28 bg-horizon-gradient-h-soft" />
             </div>
 
-            {/* Constelación · 6 cols */}
-            <div className="lg:col-span-6 flex justify-center lg:justify-end">
+            {/* Constelación · 8 cols (D-final 2026-04-27 · 7→8 + padding-left 16px
+             * en lugar de 48px para reducir margen interno del split y permitir
+             * que la constelación XL aproveche el lienzo completo). */}
+            <div className="lg:col-span-8 lg:pl-4 flex justify-center lg:justify-end">
               <Reveal delay={300}>
                 <HeroConstelacion />
               </Reveal>
@@ -99,10 +105,19 @@ export default function SolucionesInstitucionesPage() {
       </SectionWrapper>
 
       <Manifiesto />
+      {/* No insertamos HorizonDivider antes/después del Manifiesto:
+          el Manifiesto trae su propia línea atmospheric horizontal interna
+          a 60% que ya cumple la función de divisor (decisión QA fix 2026-04-28). */}
       <SistemaRoles />
+      {/* No insertamos HorizonDivider alrededor de SistemaRoles: la sección
+          implementa su propia regla "waterline" interna como divisor (decisión
+          QA fix 2026-04-28). */}
       <Cobertura />
+      <HorizonDivider />
       <EscalaInstitucion />
+      <HorizonDivider />
       <Implementacion />
+      <HorizonDivider />
       <CierreInstitucional />
     </>
   );

@@ -16,18 +16,27 @@ import { AnimatedPath } from "../shared/AnimatedPath";
  *   · Etiquetas literales del SPEC: estudiantes / programas / pagos /
  *     comunicaciones / evaluaciones / agenda
  *
- * viewBox 0 0 800 360 · escalado fluido `clamp(560px, 60vw, 800px)`.
+ * viewBox 0 0 960 400 · escalado fluido `clamp(620px, 70vw, 960px)`.
+ *
+ * Sprint C · D-fix · 2026-04-27 · Etiquetas largas ("COMUNICACIONES",
+ * "EVALUACIONES") se cortaban contra el borde del viewBox. Se aplica
+ * "alternativa combinada" del spec: viewBox ampliado lateralmente
+ * (800→960, 360→400) + satélites laterales acercados ~10% al centro
+ * para garantizar holgura suficiente a las etiquetas exteriores. El
+ * núcleo se recentra en (480,200).
  */
-const NUCLEUS = { x: 400, y: 180 };
+const NUCLEUS = { x: 480, y: 200 };
 const NUCLEUS_R = 32;
 
+// Satélites desplazados ~10% al centro vs versión original; layout se recompone
+// en torno al nuevo centro (480,200). Holgura lateral ≈120-140px → etiquetas completas.
 const SATELITES = [
-  { x: 110, y: 90,  label: "estudiantes",    side: "L" },
-  { x: 690, y: 95,  label: "programas",      side: "R" },
-  { x: 705, y: 235, label: "pagos",          side: "R" },
-  { x: 90,  y: 250, label: "comunicaciones", side: "L" },
-  { x: 240, y: 320, label: "evaluaciones",   side: "B" },
-  { x: 580, y: 315, label: "agenda",         side: "B" },
+  { x: 200, y: 100, label: "estudiantes",    side: "L" },
+  { x: 760, y: 105, label: "programas",      side: "R" },
+  { x: 775, y: 255, label: "pagos",          side: "R" },
+  { x: 180, y: 270, label: "comunicaciones", side: "L" },
+  { x: 320, y: 350, label: "evaluaciones",   side: "B" },
+  { x: 640, y: 345, label: "agenda",         side: "B" },
 ] as const;
 
 export function HeroNucleo() {
@@ -35,9 +44,9 @@ export function HeroNucleo() {
     <svg
       role="img"
       aria-label="Núcleo enfocado · seis áreas operativas conectadas a una sola interfaz"
-      viewBox="0 0 800 360"
+      viewBox="0 0 960 400"
       className="w-full h-auto"
-      style={{ width: "clamp(560px, 60vw, 800px)", maxWidth: "100%" }}
+      style={{ width: "clamp(620px, 70vw, 960px)", maxWidth: "100%" }}
     >
       <defs>
         <radialGradient id="nucleus-halo" cx="50%" cy="50%" r="50%">

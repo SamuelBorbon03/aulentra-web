@@ -48,6 +48,57 @@
   --horizon-gradient-soft:
     linear-gradient(135deg, #A5B4FC 0%, #7DD3FC 55%, #67E8F9 100%);
 
+  /* ─── Iceberg monolítico (SistemaRoles) ─────────────────────────────────
+   * 7 stops verticales para fundir el monolito orgánico desde la cresta
+   * (top: visible, frío) hasta la base (bottom: profundidad, fade hacia bg).
+   * Stops 0.94-1.00 reservados para la zona fade donde vive "+ Activar
+   * nueva capa" en cursiva. La zona OPERACIÓN (~stop 0.50) recibe el
+   * halo cyan #5BC4FF como latido frío.
+   *
+   * Diseñados para `<linearGradient y1="0%" y2="100%">` consumido como
+   * url(#iceberg-monolith-gradient) — los valores se mantienen aquí para
+   * que ajustes visuales no requieran tocar el TSX.
+   */
+  --iceberg-stop-1: rgba(236, 238, 248, 0.04); /* 0.00 · cresta superior */
+  --iceberg-stop-2: rgba(236, 238, 248, 0.06); /* 0.20 · gobierno */
+  --iceberg-stop-3: rgba(236, 238, 248, 0.08); /* 0.32 · gestión / línea agua */
+  --iceberg-stop-4: rgba(91, 196, 255, 0.10);  /* 0.50 · operación · cyan #5BC4FF */
+  --iceberg-stop-5: rgba(236, 238, 248, 0.12); /* 0.68 · comunidad */
+  --iceberg-stop-6: rgba(236, 238, 248, 0.10); /* 0.84 · datos */
+  --iceberg-stop-fade: rgba(236, 238, 248, 0.02); /* 0.94 → 1.00 · fade base */
+  --iceberg-stop-bottom: rgba(236, 238, 248, 0); /* 1.00 · disolución total */
+
+  /* Halo cyan tras zona OPERACIÓN · "corazón del iceberg" */
+  --iceberg-halo-cyan: #5BC4FF;
+
+  /* ─── Atmósfera Horizon · A+B+D · 2026-04-28 ──────────────────────────
+   * Sistema de 3 capas: halos radiales por sección, noise grain global,
+   * líneas horizon. Spec literal en
+   *   .claude/agent-memory/lead-product-designer/atmosphere_horizon_spec.md
+   * Stacking lógico:
+   *   bg base (-3) · noise body::before (-2) · halo SectionWrapper::before (-1)
+   *   contenido (0) · línea horizon ::after (+1)
+   */
+  /* RGB triplets para alpha modular (rgb(var(--halo-primary) / α)) */
+  --halo-primary: 99, 102, 241;   /* indigo-500 */
+  --halo-cyan:    6, 182, 212;    /* cyan-500 */
+  /* Alphas por contexto.
+   * NOTA · 2026-04-28 · Fix QA atmósfera A+B+D:
+   * `--halo-alpha-section` subió de 0.055 → 0.075. A 0.055 el indigo
+   * #6366f1 (rgb 99,102,241) sobre bg-deep #101328 generaba un delta
+   * cromático imperceptible (R+5 G+5 B+11) — composición tono-sobre-tono
+   * matemáticamente plana. El override de `.solicitud-form-section`
+   * (línea ~221) sigue forzando 0.040 ahí porque el form es el foco. */
+  --halo-alpha-hero:    0.085;
+  --halo-alpha-section: 0.075;
+  --halo-alpha-closure: 0.070;
+  /* Noise */
+  --noise-alpha:        0.022;
+  --noise-alpha-mobile: 0.030;
+  /* Línea horizon (1px sobre superficie + glow indigo blur 3px) */
+  --horizon-line:      rgba(54, 59, 104, 0.45); /* line-strong @ 0.45 */
+  --horizon-line-glow: rgba(99, 102, 241, 0.10);
+
   /* Transición estándar */
   --ease-std:     cubic-bezier(0.4, 0, 0.2, 1);
   --duration-std: 200ms;
@@ -70,6 +121,70 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   letter-spacing: -0.006em;
+  /* Asegurar que body::before pueda anclarse fixed sin chocar con stacking */
+  position: relative;
+}
+
+/* ─── Atmósfera · capa B · noise grain global (fixed, sin repaint en scroll) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("/textures/noise-256.png");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  opacity: var(--noise-alpha);
+}
+@media (max-width: 767px) {
+  body::before { opacity: var(--noise-alpha-mobile); }
+}
+
+/* ─── Atmósfera · capa A · halo radial por sección
+ * Activado por SectionWrapper cuando recibe prop `halo`.
+ * Las CSS vars --halo-rgb y --halo-a las inyecta el componente.
+ * Posición: top-center -10% · elipse 70vw×60vh con max 1000×600px.
+ * Stops: 0% / 60% / 100%. */
+.halo-section {
+  position: relative;
+}
+.halo-section::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  top: -10%;
+  left: 50%;
+  width: min(70vw, 1000px);
+  height: min(60vh, 600px);
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgb(var(--halo-rgb) / var(--halo-a)) 0%,
+    rgb(var(--halo-rgb) / calc(var(--halo-a) * 0.35)) 60%,
+    rgb(var(--halo-rgb) / 0) 100%
+  );
+}
+.halo-section > * {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 767px) {
+  .halo-section::before {
+    width: 110vw;
+    height: 40vh;
+    opacity: 0.8;
+  }
+  /* Fix QA atmósfera 2026-04-28 · overflow horizontal mobile:
+   * El ::before del halo en mobile usa width:110vw (+ transform translateX
+   * para centrar). Su rect derecho cae ~5vw fuera del viewport y arrastra
+   * documentElement.scrollWidth a +19px de overflow horizontal en 375.
+   * Clipamos solo el wrapper halo-section en mobile — el efecto visual
+   * del halo se preserva (queda recortado al borde de la sección, lo cual
+   * es el comportamiento atmósferico esperado). */
+  .halo-section { overflow-x: clip; }
 }
 
 *,
@@ -100,6 +215,24 @@ h1, h2, h3, h4, h5, h6 {
     transition-duration: 0ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Atmósfera · prefers-contrast: more
+ *   - oculta halos y noise (capas decorativas)
+ *   - vuelve sólidas las líneas horizon */
+@media (prefers-contrast: more) {
+  body::before { display: none !important; }
+  [data-halo]::before { display: none !important; }
+  [data-horizon-divider]::before {
+    background: var(--line-strong) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Override puntual: en /solicitar-acceso el form es el foco visual,
+ * el halo de la sección debe ser más discreto. */
+.solicitud-form-section[data-halo]::before {
+  --halo-alpha-section: 0.040 !important;
 }
 
 /* Focus visible — anillo primary soft */
@@ -271,4 +404,87 @@ h1, h2, h3, h4, h5, h6 {
   .animate-node-ring {
     animation: none !important;
   }
+}
+
+/* ============================================================================
+ * SistemaRoles · Estratos editoriales · Banda core "OPERACIÓN"
+ * Sprint atmósfera · 2026-04-28.
+ *
+ * Halo radial cyan local a la banda III (corazón del sistema). NO toca el
+ * sistema A+B+D global — SectionWrapper.halo permanece `false` en este
+ * componente. El halo vive aquí.
+ *
+ * Color: rgb(91 196 255) === #5BC4FF, mismo valor que el token semántico
+ *        --iceberg-halo-cyan ya declarado arriba (consumido literalmente
+ *        por consistencia con la spec del componente).
+ *
+ * NOTA · DEPRECATED: los tokens --iceberg-stop-1..--iceberg-stop-bottom
+ * (líneas 62-69) quedaron obsoletos al sustituir el SVG monolítico por
+ * estratos tipográficos. Se preservan en este sprint y se auditarán para
+ * limpieza junto al resto de tokens muertos en sprint posterior.
+ * ==========================================================================*/
+.banda-core::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 720px 280px at 50% 50%,
+    rgb(91 196 255 / 0.08) 0%,
+    rgb(91 196 255 / 0.03) 50%,
+    rgb(91 196 255 / 0) 100%
+  );
+  animation: heartbeat-cyan 2.4s cubic-bezier(0.4, 0, 0.4, 1) infinite;
+  will-change: opacity;
+}
+.banda-core > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tablet 768-1023px · halo más compacto */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .banda-core::before {
+    background: radial-gradient(
+      ellipse 560px 240px at 50% 50%,
+      rgb(91 196 255 / 0.08) 0%,
+      rgb(91 196 255 / 0.03) 50%,
+      rgb(91 196 255 / 0) 100%
+    );
+  }
+}
+
+/* Mobile <768px · halo viewport-relative + pulso más lento */
+@media (max-width: 767px) {
+  .banda-core::before {
+    background: radial-gradient(
+      ellipse 90vw 200px at 50% 50%,
+      rgb(91 196 255 / 0.08) 0%,
+      rgb(91 196 255 / 0.03) 50%,
+      rgb(91 196 255 / 0) 100%
+    );
+    animation-duration: 3.2s;
+  }
+}
+
+@keyframes heartbeat-cyan {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+
+/* prefers-reduced-motion · congela el pulso pero mantiene halo visible.
+ * El reset global (línea 195) ya neutraliza la animación; este override
+ * fija opacity para que el halo no quede en su estado inicial 0.85. */
+@media (prefers-reduced-motion: reduce) {
+  .banda-core::before {
+    animation: none !important;
+    opacity: 0.92;
+  }
+}
+
+/* prefers-contrast: more · oculta el halo (coherente con sistema A+B+D
+ * que oculta halos decorativos en alto contraste). */
+@media (prefers-contrast: more) {
+  .banda-core::before { display: none !important; }
 }

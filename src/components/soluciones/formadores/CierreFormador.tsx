@@ -14,7 +14,8 @@ import { Button } from "@/components/ui/Button";
  */
 export function CierreFormador() {
   return (
-    <SectionWrapper tone="bg" spacing="2xl" className="border-t border-line-soft">
+    /* Atmósfera A+B+D · halo={false} — el mini núcleo eco ya provee atmosphere. */
+    <SectionWrapper tone="bg" spacing="2xl" halo={false} className="border-t border-line-soft">
       <div className="max-w-[760px] mx-auto text-center">
         <Reveal>
           <MiniNucleoEco />

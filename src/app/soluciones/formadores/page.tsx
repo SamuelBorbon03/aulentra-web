@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { Icon } from "@/components/ui/Icon";
+import { HorizonDivider } from "@/components/ui/HorizonDivider";
 
 import { HeroNucleo } from "@/components/soluciones/formadores/HeroNucleo";
 import { InterfazUnica } from "@/components/soluciones/formadores/InterfazUnica";
@@ -36,8 +37,10 @@ export const metadata: Metadata = {
 export default function SolucionesFormadoresPage() {
   return (
     <>
-      {/* ─────────────── HERO · centrado · núcleo + 6 satélites ─────────────── */}
-      <SectionWrapper tone="bg" spacing="lg" className="relative overflow-hidden">
+      {/* ─────────────── HERO · centrado · núcleo + 6 satélites ───────────────
+          Hero NO recibe halo — el SVG del núcleo + 6 satélites ES el
+          atmosphere de esta sección. Atmósfera A+B+D · 2026-04-28. */}
+      <SectionWrapper tone="bg" spacing="lg" halo={false} className="relative overflow-hidden">
         <div className="max-w-[1280px] mx-auto">
           <Reveal>
             <Link
@@ -90,11 +93,21 @@ export default function SolucionesFormadoresPage() {
         </div>
       </SectionWrapper>
 
+      {/* HorizonDividers entre cada par de SectionWrappers donde el tone
+          cambia (bg ↔ bg-deep). En esta página todas las transiciones son
+          alternantes, así que cada juntura recibe divider. Spec atmósfera
+          A+B+D · fix QA 2026-04-28. */}
+      <HorizonDivider />
       <InterfazUnica />
+      <HorizonDivider />
       <Subdominio />
+      <HorizonDivider />
       <CrecimientoOrganico />
+      <HorizonDivider />
       <CapacidadesGrid />
+      <HorizonDivider />
       <RitmoSemanal />
+      <HorizonDivider />
       <CierreFormador />
     </>
   );
