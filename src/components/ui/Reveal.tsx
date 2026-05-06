@@ -8,10 +8,17 @@ interface RevealProps extends HTMLAttributes<HTMLDivElement> {
   offset?: number;
   /** Escala inicial — sensación de "settle". Default: 0.97. */
   scaleFrom?: number;
+  /**
+   * Efecto de desenfoque en la entrada — blur(6px) → blur(0).
+   * Ideal para headlines principales. Crea una entrada cinematográfica premium.
+   * Default: false.
+   */
+  blur?: boolean;
 }
 
 /**
- * Reveal — fade + translate-y on viewport entry. Honors prefers-reduced-motion.
+ * Reveal — fade + translate-y + (opcional) blur al entrar en viewport.
+ * Respeta prefers-reduced-motion.
  */
 export function Reveal({
   className,
@@ -19,6 +26,7 @@ export function Reveal({
   delay = 0,
   offset = 28,
   scaleFrom = 0.97,
+  blur = false,
   style,
   ...props
 }: RevealProps) {
@@ -55,7 +63,7 @@ export function Reveal({
       ref={ref}
       className={cn(
         // Easing "luxury exit" + duración generosa. Combina opacity, translate y scale.
-        "transition-[opacity,transform] duration-[820ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform motion-reduce:transition-none",
+        "transition-[opacity,transform,filter] duration-[820ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform motion-reduce:transition-none",
         visible ? "opacity-100" : "opacity-0",
         className
       )}
@@ -64,6 +72,7 @@ export function Reveal({
         transform: visible
           ? "translateY(0) scale(1)"
           : `translateY(${offset}px) scale(${scaleFrom})`,
+        filter: blur ? (visible ? "blur(0px)" : "blur(6px)") : undefined,
         ...style,
       }}
       {...props}

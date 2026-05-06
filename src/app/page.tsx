@@ -42,26 +42,26 @@ export default function HomePage() {
       {/* Triada · Sprint C · C.1 — tres distinciones editoriales antes de DualPlatform */}
       {/* Transición tonal bg-deep → bg · línea horizon */}
       <HorizonDivider />
-      <SectionWrapper id="triada" tone="bg" spacing="xl" halo={false} className="border-t border-line">
+      <SectionWrapper id="triada" tone="bg" spacing="xl" halo="default" className="border-t border-line">
         <Triada />
       </SectionWrapper>
 
       {/* Transición tonal bg → bg-deep · línea horizon */}
       <HorizonDivider />
-      <SectionWrapper id="publico" tone="bg-deep" spacing="xl" halo={false} className="border-t border-line">
+      <SectionWrapper id="publico" tone="bg-deep" spacing="xl" halo="default" className="border-t border-line">
         <DualPlatform />
       </SectionWrapper>
 
       {/* Transición tonal bg-deep → bg · línea horizon */}
       <HorizonDivider />
-      <SectionWrapper id="capacidades" tone="bg" spacing="xl" halo={false} className="border-t border-line">
+      <SectionWrapper id="capacidades" tone="bg" spacing="xl" halo="default" className="border-t border-line">
         <Capabilities />
       </SectionWrapper>
 
       {/* Transición tonal bg → bg-deep · línea horizon */}
       <HorizonDivider />
       {/* AccessFinal · cierre · halo local cyan vive en el componente (no en wrapper) */}
-      <SectionWrapper id="acceso" tone="bg-deep" spacing="xl" halo={false} className="border-t border-line">
+      <SectionWrapper id="acceso" tone="bg-deep" spacing="xl" halo="closure" className="border-t border-line">
         <AccessFinal />
       </SectionWrapper>
     </>

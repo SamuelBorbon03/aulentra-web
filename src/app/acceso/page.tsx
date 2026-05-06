@@ -281,8 +281,10 @@ function FormView({
   return (
     <div className="animate-fade-in-up">
       {/* Brand header */}
-      <div className="flex flex-col items-center mb-10">
-        <Link href="/" className="group flex items-center gap-3 mb-6" aria-label="Volver al home de Aulentra">
+      <div className="flex flex-col items-center mb-10 relative">
+        {/* Halo muy muy sutil detrás del logo */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-28 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
+        <Link href="/" className="group flex items-center gap-3 mb-6 relative z-10" aria-label="Volver al home de Aulentra">
           <Image
             src="/brand/aulentra_symbol_transparent.png"
             alt=""
@@ -301,7 +303,7 @@ function FormView({
       </div>
 
       {/* Tarjeta de login */}
-      <div className="relative rounded-lg border border-line-strong bg-card/80 backdrop-blur-sm overflow-hidden shadow-lg">
+      <div className="relative rounded-xl border border-line-soft/40 bg-card/60 backdrop-blur-xl overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.6)] ring-1 ring-white/[0.04]">
         <div className="h-[2px] bg-horizon-gradient" />
         <div className="px-7 py-8">
           <form onSubmit={onSubmit}>
@@ -330,8 +332,8 @@ function FormView({
                   autoFocus
                   invalid={formatError}
                   className={cn(
-                    "pr-10",
-                    !formatError && emailValid && "border-primary/50 focus:border-primary",
+                    "pr-10 bg-bg-deep/50 transition-all duration-300",
+                    !formatError && emailValid && "border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20",
                   )}
                 />
                 {/* Indicador validación tiempo real */}
@@ -344,7 +346,7 @@ function FormView({
             <button
               type="submit"
               disabled={busy || !emailValid}
-              className="mt-6 w-full rounded-md py-3.5 font-semibold text-small tracking-wide text-bg-deep disabled:opacity-40 disabled:cursor-not-allowed transition-opacity flex items-center justify-center gap-2 bg-horizon-gradient-h-soft"
+              className="mt-6 w-full rounded-md py-3.5 font-semibold text-small tracking-wide text-bg-deep disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 bg-horizon-gradient-h-soft hover:shadow-[0_0_20px_rgba(165,180,252,0.25)] hover:opacity-95"
             >
               {busy ? (
                 <>

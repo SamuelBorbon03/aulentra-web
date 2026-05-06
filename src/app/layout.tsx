@@ -6,6 +6,8 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/ui/PageTransition";
+import { AtmosphereProvider } from "@/components/layout/AtmosphereProvider";
+import { AuroraBackground } from "@/components/ui/AuroraBackground";
 
 // Geist — tipografía oficial del producto (paquete `geist` de Vercel)
 // GeistSans.variable → --font-geist-sans
@@ -59,11 +61,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${GeistSans.variable} ${GeistMono.variable} ${plexSerif.variable}`}
     >
       <body>
-        <Header />
-        <main id="main">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
+        <AtmosphereProvider>
+          <AuroraBackground />
+          <Header />
+          <main id="main">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+        </AtmosphereProvider>
       </body>
     </html>
   );

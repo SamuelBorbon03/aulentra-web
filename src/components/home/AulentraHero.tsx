@@ -40,7 +40,7 @@ export function AulentraHero() {
         />
 
         {/* Wordmark + tagline · sin símbolo arriba (vive como sigilo de fondo) */}
-        <Reveal>
+        <Reveal blur>
           <div className="relative flex flex-col items-center">
             <div className="text-wordmark-sm md:text-wordmark bg-clip-text text-transparent leading-none bg-horizon-gradient-h-wordmark">
               AULENTRA
@@ -52,7 +52,7 @@ export function AulentraHero() {
         </Reveal>
 
         {/* Headline · 40px del lockup · domina la composición */}
-        <Reveal delay={120}>
+        <Reveal delay={120} blur>
           <h1 className="mt-10 text-display font-bold text-fg leading-[1.02] tracking-[-0.025em] max-w-[780px] mx-auto">
             <span className="block">Una institución funciona como un sistema.</span>
             <span className="block text-text-subtle">O no funciona.</span>

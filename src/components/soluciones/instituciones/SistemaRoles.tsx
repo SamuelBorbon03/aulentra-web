@@ -62,8 +62,11 @@ export function SistemaRoles() {
     <SectionWrapper tone="bg" spacing="2xl" halo={false} className="border-t border-line-soft">
       <div className="max-w-[1200px] mx-auto">
         <Reveal>
-          <div className="text-caption uppercase tracking-[0.32em] text-primary mb-6">
-            El sistema
+          <div className="flex items-center gap-3 mb-6">
+            <span className="block h-px w-6 bg-primary shrink-0" aria-hidden="true" />
+            <span className="text-small font-semibold uppercase tracking-[0.22em] text-primary">
+              El Sistema
+            </span>
           </div>
         </Reveal>
         <Reveal delay={120}>

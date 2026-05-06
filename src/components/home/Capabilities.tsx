@@ -52,8 +52,11 @@ export function Capabilities() {
       <Reveal>
         <div className="mb-20 md:mb-24">
           {/* Eyebrow alineado izquierda · sin counter editorial (P4 suprime) */}
-          <div className="text-caption uppercase tracking-[0.32em] text-primary mb-10">
-            Cómo opera
+          <div className="flex items-center gap-3 mb-10">
+            <span className="block h-px w-6 bg-primary shrink-0" aria-hidden="true" />
+            <span className="text-small font-semibold uppercase tracking-[0.22em] text-primary">
+              ¿Cómo Opera?
+            </span>
           </div>
 
           {/* Headline en grid 7/5 · jerarquía declarativa */}
@@ -78,7 +81,7 @@ export function Capabilities() {
           const isRight = i % 2 === 1;
           const isBottomRow = i >= 2;
           return (
-            <Reveal key={c.index} delay={80 * (i + 1)}>
+            <Reveal key={c.index} delay={(i + 1) * 120}>
               <article
                 className={[
                   "group relative py-12 md:py-16 lg:py-20",
@@ -92,9 +95,9 @@ export function Capabilities() {
                   .filter(Boolean)
                   .join(" ")}
               >
-                {/* Línea acento que aparece en hover · ancla la card sin marcar exceso */}
+                {/* Línea acento: pulsa suavemente en reposo, y se extiende al hacer hover */}
                 <span
-                  className="absolute top-0 left-0 h-px w-0 group-hover:w-12 bg-gradient-to-r from-primary to-cyan-300 transition-all duration-500 ease-out"
+                  className="absolute top-0 left-0 h-px bg-gradient-to-r from-primary to-cyan-300 animate-glow-pulse group-hover:w-12 group-hover:[animation:none] group-hover:opacity-100 transition-[width] duration-500 ease-out"
                   aria-hidden="true"
                 />
 

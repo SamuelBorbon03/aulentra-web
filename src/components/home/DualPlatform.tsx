@@ -5,6 +5,11 @@ import { Reveal } from "@/components/ui/Reveal";
  *
  * Cards sólidas (no flotantes) con padding interno 40px, separación 24px,
  * fondo elevated para diferenciarse del bg de la sección. Hover lift sobrio.
+ *
+ * Mejora visual 2026-05-05:
+ *   Las cards tienen un float-idle suave (0→-5px en 5s) que las hace
+ *   "respirar" en reposo. Card A y B tienen un desfase de 2.5s entre sí
+ *   para que el movimiento se sienta orgánico, no mecánico.
  */
 export function DualPlatform() {
   return (
@@ -12,8 +17,11 @@ export function DualPlatform() {
       <Reveal>
         <div className="mb-20 md:mb-24">
           {/* Eyebrow alineado a la izquierda · sin counter editorial (P4 suprime) */}
-          <div className="text-caption uppercase tracking-[0.32em] text-primary mb-10">
-            Institución · Formador
+          <div className="flex items-center gap-3 mb-10">
+            <span className="block h-px w-6 bg-primary shrink-0" aria-hidden="true" />
+            <span className="text-small font-semibold uppercase tracking-[0.22em] text-primary">
+              Institución · Formador
+            </span>
           </div>
 
           {/* Headline + sub-afirmación en grid 7/5 · jerarquía clara */}
@@ -54,6 +62,7 @@ export function DualPlatform() {
               },
             ]}
             accent="#818CF8"
+            floatDelay="0s"
           />
         </Reveal>
         <Reveal delay={180}>
@@ -76,6 +85,7 @@ export function DualPlatform() {
               },
             ]}
             accent="#22D3EE"
+            floatDelay="2.5s"
           />
         </Reveal>
       </div>
@@ -89,16 +99,27 @@ function Card({
   title,
   stats,
   accent,
+  floatDelay,
 }: {
   index: string;
   label: string;
   title: string;
   stats: { k: string; v: string }[];
   accent: string;
+  floatDelay: string;
 }) {
   return (
     <div
-      className="group relative rounded-2xl border border-line-strong bg-elevated/70 p-8 md:p-10 lg:p-12 overflow-hidden h-full transition-all duration-300 ease-out hover:-translate-y-[3px] hover:bg-elevated hover:border-line-strong/80 hover:shadow-[0_24px_60px_-32px_rgba(0,0,0,0.6)]"
+      className="group relative rounded-2xl border border-line-strong bg-elevated/70 p-8 md:p-10 lg:p-12 overflow-hidden h-full transition-[border-color,box-shadow] duration-300 ease-out hover:bg-elevated hover:border-line-strong/80 hover:shadow-[0_24px_60px_-32px_rgba(0,0,0,0.6)]"
+      style={{
+        // Float idle: la card "respira" suavemente en reposo
+        // Se desactiva al hacer hover porque el hover lift toma el control
+        animationName: "float-idle",
+        animationDuration: "5s",
+        animationTimingFunction: "ease-in-out",
+        animationIterationCount: "infinite",
+        animationDelay: floatDelay,
+      }}
     >
       {/* Glow sutil en hover · sigue al accent · no decorativo, da identidad */}
       <div

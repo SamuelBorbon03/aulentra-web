@@ -20,8 +20,12 @@ export function IdentityDeclaration() {
     <div className="max-w-[1200px] mx-auto">
       {/* Eyebrow */}
       <Reveal>
-        <div className="text-caption uppercase tracking-[0.32em] text-primary mb-16">
-          Qué es Aulentra
+        <div className="flex items-center gap-3 mb-10">
+          {/* Acento editorial — línea horizontal que ancla el label como inicio de sección */}
+          <span className="block h-px w-6 bg-primary shrink-0" aria-hidden="true" />
+          <span className="text-small font-semibold uppercase tracking-[0.22em] text-primary">
+            ¿Qué es Aulentra?
+          </span>
         </div>
       </Reveal>
 
@@ -31,7 +35,7 @@ export function IdentityDeclaration() {
         <div className="lg:col-span-5 relative">
           {/* Negación · anchor tipográfico atenuado */}
           <Reveal delay={80}>
-            <h2 className="relative text-display-sm md:text-display-lg text-text-subtle">
+            <h2 className="relative text-display-sm md:text-display-lg text-text-muted">
               <span className="block">No es un LMS.</span>
               <span className="block">No es software</span>
               <span className="block">administrativo.</span>
@@ -91,25 +95,25 @@ export function IdentityDeclaration() {
             />
           </Reveal>
 
-          {/* Sub-bloque 1 · diagnóstico + acción · jerarquía cruzada (introduce → afirma) */}
+          {/* Sub-bloque 1 · diagnóstico + acción · anclado con línea lateral */}
           <Reveal delay={240}>
-            <div className="max-w-[520px] space-y-3">
-              <p className="text-body-soft text-text-subtle">
+            <div className="pl-4 border-l border-line-strong max-w-[520px] space-y-1.5">
+              <p className="text-body text-text-subtle leading-snug">
                 La operación académica está fragmentada por diseño.
               </p>
-              <p className="text-body-soft text-text-strong font-medium">
+              <p className="text-body-l text-text-strong font-semibold leading-snug">
                 Aulentra la unifica en una sola arquitectura.
               </p>
             </div>
           </Reveal>
 
-          {/* Sub-bloque 2 · consecuencia estructural */}
+          {/* Sub-bloque 2 · consecuencia estructural · mismo patrón visual */}
           <Reveal delay={340}>
-            <div className="max-w-[520px] space-y-3">
-              <p className="text-body-soft text-text-subtle">
+            <div className="pl-4 border-l border-line-strong max-w-[520px] space-y-1.5">
+              <p className="text-body text-text-subtle leading-snug">
                 Una sola fuente de verdad.
               </p>
-              <p className="text-body-soft text-text-strong font-medium">
+              <p className="text-body-l text-text-strong font-semibold leading-snug">
                 Nada queda fuera del sistema.
               </p>
             </div>
